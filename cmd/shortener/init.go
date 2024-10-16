@@ -4,7 +4,7 @@ import (
 	"flag"
 )
 
-var a, b, f, d, w, s, q *string
+var a, b, f, d, w, s, q, p *string
 
 func init() {
 	//флаг -a, отвечающий за адрес запуска HTTP-сервера (переменная SERVER_ADDRESS)
@@ -21,4 +21,13 @@ func init() {
 	s = flag.String("s", "", "BUTCH_SIZE")
 	//флаг -q, отвечающий за размер очереди для удаления
 	q = flag.String("q", "", "DELETE_QUEUE_SIZE")
+	//флаг -p, отвечающий за тип профилирования
+	p = flag.String("p", "", "PROFILE_TYPE")
 }
+
+// Типы профилирования приложения
+const (
+	noneProfile = iota
+	baseProfile
+	resultProfile
+)

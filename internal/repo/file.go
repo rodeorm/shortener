@@ -146,11 +146,11 @@ func (s fileStorage) SelectUserByKey(Key int) (*core.User, error) {
 }
 
 // SelectUserURL возвращает перечень соответствий между оригинальным и коротким адресом для конкретного пользователя
-func (s fileStorage) SelectUserURLHistory(user *core.User) (*[]core.UserURLPair, error) {
+func (s fileStorage) SelectUserURLHistory(user *core.User) ([]core.UserURLPair, error) {
 	if s.userURLPairs[user.Key] == nil {
 		return nil, fmt.Errorf("нет истории")
 	}
-	return s.userURLPairs[user.Key], nil
+	return *s.userURLPairs[user.Key], nil
 }
 
 // getNextFreeKey возвращает ближайший свободный идентификатор пользователя

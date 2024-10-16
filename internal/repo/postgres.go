@@ -29,6 +29,9 @@ InsertUser принимает идентификатор пользовател�
 */
 func (s postgresStorage) InsertUser(Key int) (*core.User, bool, error) {
 
+	// ctx, cancel := context.WithTimeout(r.Context(), 5*time.Second)
+	// defer cancel()
+
 	ctx := context.TODO()
 	var isUnathorized bool
 
@@ -106,7 +109,7 @@ func (s postgresStorage) SelectOriginalURL(shortURL string) (*core.URL, error) {
 }
 
 // SelectUserURLHistory возвращает перечень соответствий между оригинальным и коротким адресом для конкретного пользователя
-func (s postgresStorage) SelectUserURLHistory(user *core.User) (*[]core.UserURLPair, error) {
+func (s postgresStorage) SelectUserURLHistory(user *core.User) ([]core.UserURLPair, error) {
 	urls := make([]core.UserURLPair, 0, 1)
 
 	err := s.preparedStatements["SelectUserURLHistory"].Select(&urls, user.Key)
@@ -118,7 +121,7 @@ func (s postgresStorage) SelectUserURLHistory(user *core.User) (*[]core.UserURLP
 	if len(urls) == 0 {
 		return nil, fmt.Errorf("нет истории для пользователя %d", user.Key)
 	}
-	return &urls, nil
+	return urls, nil
 }
 
 func (s postgresStorage) CloseConnection() {

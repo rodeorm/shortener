@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"os"
+	"strconv"
 
 	"github.com/rodeorm/shortener/internal/api"
 	"github.com/rodeorm/shortener/internal/logger"
@@ -18,8 +19,11 @@ func config() *api.Server {
 	// os.Setenv("FILE_STORAGE_PATH", "D:/file.txt")
 	// os.Setenv("DATABASE_DSN", "postgres://app:qqqQQQ123@localhost:5432/shortener?sslmode=disable")
 
-	var serverAddress, baseURL, fileStoragePath, databaseConnectionString string
-	var workerCount, batchSize, queueSize int
+	var (
+		serverAddress, baseURL, fileStoragePath, databaseConnectionString string
+		workerCount, batchSize, queueSize, profileType                    int
+		err                                                               error
+	)
 
 	//Адрес запуска HTTP-сервера
 	if *a == "" {
@@ -67,6 +71,15 @@ func config() *api.Server {
 		queueSize = 10
 	}
 
+	if *p == "" {
+		profileType = noneProfile
+	} else {
+		profileType, err = strconv.Atoi(*p)
+		if err != nil {
+			profileType = noneProfile
+		}
+	}
+
 	logger.Initialize("info")
 
 	server := &api.Server{
@@ -75,7 +88,9 @@ func config() *api.Server {
 		DeleteQueue:   api.NewQueue(queueSize),
 		BaseURL:       baseURL,
 		WorkerCount:   workerCount,
-		BatchSize:     batchSize}
+		BatchSize:     batchSize,
+		ProfileType:   profileType,
+	}
 
 	return server
 }

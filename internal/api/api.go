@@ -3,6 +3,7 @@ package api
 import (
 	"log"
 	"net/http"
+	"net/http/pprof"
 	"time"
 
 	"github.com/gorilla/mux"
@@ -25,11 +26,17 @@ func ServerStart(s *Server) error {
 	r.HandleFunc("/api/shorten", s.APIShortenHandler).Methods(http.MethodPost)
 	r.HandleFunc("/api/user/urls", s.APIUserGetURLsHandler).Methods(http.MethodGet)
 	r.HandleFunc("/api/user/urls", s.APIUserDeleteURLsHandler).Methods(http.MethodDelete)
-	r.HandleFunc("/api/shorten/batch", s.APIShortenBatch).Methods(http.MethodPost)
+	r.HandleFunc("/api/shorten/batch", s.APIShortenBatchHandler).Methods(http.MethodPost)
 
 	r.HandleFunc("/", s.BadRequestHandler)
-
 	r.Use(middleware.WithZip, middleware.WithLog)
+
+	pprofRouter := r.PathPrefix("/debug/pprof/").Subrouter()
+	pprofRouter.HandleFunc("/", pprof.Index)
+	pprofRouter.HandleFunc("/cmdline", pprof.Cmdline)
+	pprofRouter.HandleFunc("/profile", pprof.Profile)
+	pprofRouter.HandleFunc("/symbol", pprof.Symbol)
+	pprofRouter.HandleFunc("/trace", pprof.Trace)
 
 	srv := &http.Server{
 		Handler:      r,
@@ -55,7 +62,8 @@ type Server struct {
 
 	WorkerCount int
 	BatchSize   int
+	ProfileType int
 
-	Storage     repo.AbstractStorage
+	Storage     repo.Storager
 	DeleteQueue *Queue
 }

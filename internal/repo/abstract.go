@@ -9,7 +9,7 @@ import (
 	"go.uber.org/zap"
 )
 
-type AbstractStorage interface {
+type Storager interface {
 	/*
 		InsertURL принимает оригинальный URL, базовый урл для генерации коротких адресов и пользователя.
 		Генерирует уникальный ключ для короткого адреса, сохраняет соответствие оригинального URL и ключа.
@@ -25,7 +25,7 @@ type AbstractStorage interface {
 	InsertUser(Key int) (*core.User, bool, error)
 
 	// SelectUserURLHistory возвращает перечень соответствий между оригинальным и коротким адресом для конкретного пользователя
-	SelectUserURLHistory(user *core.User) (*[]core.UserURLPair, error)
+	SelectUserURLHistory(user *core.User) ([]core.UserURLPair, error)
 
 	// Массово помечает URL как удаленные. Успешно удалить URL может только пользователь, его создавший.
 	DeleteURLs(URLs []core.URL) error
@@ -36,8 +36,8 @@ type AbstractStorage interface {
 }
 
 // NewStorage определяет место для хранения данных
-func NewStorage(filePath, dbConnectionString string) AbstractStorage {
-	var storage AbstractStorage
+func NewStorage(filePath, dbConnectionString string) Storager {
+	var storage Storager
 
 	storage, err := InitPostgresStorage(dbConnectionString)
 	if err == nil {
