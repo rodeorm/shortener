@@ -9,9 +9,9 @@ import (
 	"github.com/rodeorm/shortener/internal/core"
 )
 
-// GetUserIdentity определяет по кукам какой пользователь авторизовался, если куки некорректные, то создает новые, но возвращает ошибку
+// GetUserIdentity определяет по кукам какой пользователь авторизовался, если куки некорректные, то создает нового пользователя и новые куки, но возвращает совместно с ними и ошибку
 func (h Server) GetUserIdentity(w http.ResponseWriter, r *http.Request) (http.ResponseWriter, *core.User, error) {
-	userKey, err := cookie.GetUserKeyFromCoockie(r)
+	userKey, err := cookie.GetUserKeyFromCookie(r)
 	var isUnathorized bool
 
 	if err != nil {

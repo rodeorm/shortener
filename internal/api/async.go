@@ -52,10 +52,10 @@ type Worker struct {
 	id        int
 	batchSize int
 	queue     *Queue
-	storage   repo.AbstractStorage
+	storage   repo.Storager
 }
 
-func NewWorker(id int, queue *Queue, storage repo.AbstractStorage, batchSize int) *Worker {
+func NewWorker(id int, queue *Queue, storage repo.Storager, batchSize int) *Worker {
 	w := Worker{
 		id:        id,
 		queue:     queue,

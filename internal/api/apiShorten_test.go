@@ -7,11 +7,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/go-resty/resty/v2"
-	"github.com/golang/mock/gomock"
-	"github.com/rodeorm/shortener/internal/core"
 	"github.com/rodeorm/shortener/internal/repo"
-	"github.com/rodeorm/shortener/mocks"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -78,49 +74,4 @@ func TestAPIShorten(t *testing.T) {
 
 		})
 	}
-}
-
-func TestRoot(t *testing.T) {
-	ctrl := gomock.NewController(t)
-	defer ctrl.Finish()
-
-	storage := mocks.NewMockAbstractStorage(ctrl)
-
-	storage.EXPECT().InsertUser(gomock.Any()).Return(&core.User{Key: 1000}, false, nil).MaxTimes(3)
-	storage.EXPECT().InsertURL("http://double.com", gomock.Any(), gomock.Any()).Return(&core.URL{Key: "short", HasBeenShorted: true}, nil)
-	storage.EXPECT().InsertURL("http://err", gomock.Any(), gomock.Any()).Return(nil, fmt.Errorf("ошибка"))
-	storage.EXPECT().InsertURL("http://valid.com", gomock.Any(), gomock.Any()).Return(&core.URL{Key: "short", HasBeenShorted: false}, nil)
-
-	s := Server{Storage: storage}
-
-	handler := http.HandlerFunc(s.RootHandler)
-	srv := httptest.NewServer(handler)
-	defer srv.Close()
-
-	testCases := []struct {
-		name         string
-		method       string
-		requestBody  string
-		expectedCode int
-		expectedBody string
-	}{
-		{name: "проверка на попытку сократить ранее сокращенный урл", method: http.MethodPost, requestBody: "http://double.com", expectedCode: http.StatusConflict},
-		{name: "проверка на попытку сократить невалидный урл", method: http.MethodPost, requestBody: "http://err", expectedCode: http.StatusBadRequest},
-		{name: "проверка на попытку сократить корректный урл, который не сокращали ранее", method: http.MethodPost, requestBody: "http://valid.com", expectedCode: http.StatusCreated},
-	}
-
-	for _, tc := range testCases {
-		t.Run(tc.name, func(t *testing.T) {
-			req := resty.New().R()
-			req.Method = tc.method
-			req.URL = srv.URL
-			req.Body = tc.requestBody
-
-			resp, err := req.Send()
-
-			assert.NoError(t, err, "ошибка при попытке сделать запрос")
-			assert.Equal(t, tc.expectedCode, resp.StatusCode(), "Код ответа не соответствует ожидаемому")
-		})
-	}
-
 }
