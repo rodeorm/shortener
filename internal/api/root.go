@@ -6,10 +6,14 @@ import (
 	"net/http"
 )
 
-// RootHandler POST принимает в теле запроса строку URL для сокращения и возвращает ответ с кодом 201 и сокращённым URL в виде текстовой строки в теле.
+// RootHandler принимает POST запрос. В теле запроса строку надо передать URL для сокращения.
+//
+// Возвращает ответ с кодом 201 и сокращённым URL в виде текстовой строки в теле, если удалось сократить URL без ошибок.
+// Возвращает ответ с кодом 409, если URL был сокращен ранее.
+// Возвращает ответ с кодом 400, если возникает ошибка.
 func (h Server) RootHandler(w http.ResponseWriter, r *http.Request) {
 
-	w, user, err := h.GetUserIdentity(w, r)
+	w, user, err := h.getUserIdentity(w, r)
 	if err != nil {
 		handleError(w, err, "RootHandler 1")
 		return

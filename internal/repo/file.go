@@ -94,19 +94,19 @@ func (s fileStorage) SelectOriginalURL(shortURL string) (*core.URL, error) {
 }
 
 // InsertUser сохраняет нового пользователя или возвращает уже имеющегося в наличии
-func (s fileStorage) InsertUser(Key int) (*core.User, bool, error) {
+func (s fileStorage) InsertUser(Key int) (*core.User, error) {
 	if Key <= 0 {
-		user := &core.User{Key: s.getNextFreeKey()}
+		user := &core.User{Key: s.getNextFreeKey(), WasUnathorized: true}
 		s.users[user.Key] = user
-		return user, true, nil
+		return user, nil
 	}
 	user, isExist := s.users[Key]
 	if !isExist {
-		user = &core.User{Key: Key}
+		user = &core.User{Key: Key, WasUnathorized: true}
 		s.users[Key] = user
-		return user, true, nil
+		return user, nil
 	}
-	return user, false, nil
+	return user, nil
 }
 
 // InsertUserURLPair cохраняет информацию о том, что пользователь сокращал URL, если такой информации ранее не было
@@ -146,11 +146,11 @@ func (s fileStorage) SelectUserByKey(Key int) (*core.User, error) {
 }
 
 // SelectUserURL возвращает перечень соответствий между оригинальным и коротким адресом для конкретного пользователя
-func (s fileStorage) SelectUserURLHistory(user *core.User) (*[]core.UserURLPair, error) {
+func (s fileStorage) SelectUserURLHistory(user *core.User) ([]core.UserURLPair, error) {
 	if s.userURLPairs[user.Key] == nil {
 		return nil, fmt.Errorf("нет истории")
 	}
-	return s.userURLPairs[user.Key], nil
+	return *s.userURLPairs[user.Key], nil
 }
 
 // getNextFreeKey возвращает ближайший свободный идентификатор пользователя

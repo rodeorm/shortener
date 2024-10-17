@@ -8,6 +8,7 @@ import (
 	"go.uber.org/zap"
 )
 
+// WithLog - middleware для логирования запросов и ответов
 func WithLog(h http.Handler) http.Handler {
 	logFn := func(w http.ResponseWriter, r *http.Request) {
 		start := time.Now()

@@ -3,11 +3,13 @@ package cookie
 import (
 	"fmt"
 	"net/http"
+	"strconv"
 
-	crypt "github.com/rodeorm/shortener/internal/crypt"
+	"github.com/rodeorm/shortener/internal/crypt"
 )
 
-func GetUserKeyFromCoockie(r *http.Request) (string, error) {
+// GetUserKeyFromCookie получает идентфикатор пользователя из куки "токен"
+func GetUserKeyFromCookie(r *http.Request) (string, error) {
 	tokenCookie, err := r.Cookie("token")
 	if err != nil {
 		return "", err
@@ -19,11 +21,22 @@ func GetUserKeyFromCoockie(r *http.Request) (string, error) {
 	if err != nil {
 		return "", err
 	}
+
+	_, err = strconv.Atoi(userKey)
+
+	if err != nil {
+		return "", err
+	}
+
 	return userKey, nil
 }
 
+// PutUserKeyToCookie помещает идентификатор пользователя в  куки "токен"
 func PutUserKeyToCookie(Key string) *http.Cookie {
-	val, _ := crypt.Encrypt(Key)
+	val, err := crypt.Encrypt(Key)
+	if err != nil {
+		panic(err)
+	}
 
 	cookie := &http.Cookie{
 		Name:   "token",

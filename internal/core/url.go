@@ -3,6 +3,7 @@ package core
 import (
 	"fmt"
 	"net/url"
+	"regexp"
 	"strings"
 )
 
@@ -16,6 +17,12 @@ func GetClearURL(s string, d string) string {
 func CheckURLValidity(u string) bool {
 	_, err := url.ParseRequestURI(u)
 	return err == nil
+}
+
+// CheckURLValidityByRegExp проверяет URL на корректность через regexp
+func CheckURLValidityByRegExp(u string) bool {
+	var urlRegex = regexp.MustCompile(`^(http|https)://[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(/[a-zA-Z0-9-._~:?#@!$&'()*+,;=]*)*$`)
+	return urlRegex.MatchString(u)
 }
 
 func GetURLsFromString(s string, u *User) ([]URL, error) {
