@@ -9,6 +9,7 @@ import (
 	"strings"
 )
 
+// WithLog - middleware для сжатия/распаковки
 func WithZip(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if !strings.Contains(r.Header.Get("Accept-Encoding"), "gzip") {
@@ -35,15 +36,18 @@ func WithZip(next http.Handler) http.Handler {
 	})
 }
 
+// gzipWriter - абстракция над Writer и ResponseWriter
 type gzipWriter struct {
 	http.ResponseWriter
 	Writer io.Writer
 }
 
+// Writer - синтаксическое упрощение для доступа к методу io.Writer
 func (w gzipWriter) Write(b []byte) (int, error) {
 	return w.Writer.Write(b)
 }
 
+// DecompressGzip осуществляет декомпрессию данных, сжатых gzip
 func DecompressGzip(data []byte) ([]byte, error) {
 	r, err := gzip.NewReader(bytes.NewReader(data))
 	if err != nil {
@@ -60,6 +64,7 @@ func DecompressGzip(data []byte) ([]byte, error) {
 	return b.Bytes(), nil
 }
 
+// IsGzip  проверяет по заголовкам, поддерживается ли сжатие gzip
 func IsGzip(headers map[string][]string) bool {
 	for _, value := range headers["Content-Encoding"] {
 		if value == "application/gzip" || value == "gzip" {

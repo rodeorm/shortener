@@ -1,4 +1,4 @@
-package core
+package crypt
 
 import (
 	"crypto/aes"
@@ -7,8 +7,10 @@ import (
 	"encoding/base64"
 )
 
+// bytes - слайс байт для шифрования
 var bytes = []byte{35, 46, 57, 24, 85, 35, 24, 74, 87, 35, 88, 98, 66, 32, 14, 05}
 
+// MySecret - это секретный ключ
 const MySecret string = "top secret key" // в проде можно было бы рандомно генерировать, но для текущих целей не нужно
 
 // Encrypt шифрует идентификатор пользователя
@@ -44,10 +46,12 @@ func Decrypt(text string) (string, error) {
 	return string(plainText), nil
 }
 
+// Encode кодирует слайс байт в строку
 func Encode(b []byte) string {
 	return base64.StdEncoding.EncodeToString(b)
 }
 
+// Decode декодирует строку в слайсбайт
 func Decode(s string) []byte {
 	data, err := base64.StdEncoding.DecodeString(s)
 	if err != nil {

@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/rodeorm/shortener/internal/core"
+	"github.com/rodeorm/shortener/internal/logger"
 )
 
 type memoryStorage struct {
@@ -43,19 +44,19 @@ func (s memoryStorage) SelectOriginalURL(shortURL string) (*core.URL, error) {
 }
 
 // InsertUser сохраняет нового пользователя или возвращает уже имеющегося в наличии
-func (s memoryStorage) InsertUser(Key int) (*core.User, bool, error) {
+func (s memoryStorage) InsertUser(Key int) (*core.User, error) {
 	if Key == 0 {
-		user := &core.User{Key: s.getNextFreeKey()}
+		user := &core.User{Key: s.getNextFreeKey(), WasUnathorized: true}
 		s.users[user.Key] = user
-		return user, true, nil
+		return user, nil
 	}
 	user, isExist := s.users[Key]
 	if !isExist {
-		user = &core.User{Key: Key}
+		user = &core.User{Key: Key, WasUnathorized: true}
 		s.users[Key] = user
-		return user, true, nil
+		return user, nil
 	}
-	return user, false, nil
+	return user, nil
 }
 
 // InsertUserURLPair cохраняет информацию о том, что пользователь сокращал URL, если такой информации ранее не было
@@ -82,6 +83,7 @@ func (s memoryStorage) insertUserURLPair(shorten, origin string, user *core.User
 	return nil
 }
 
+// SelectUserByKey выбирает пользователя по ключу
 func (s memoryStorage) SelectUserByKey(Key int) (*core.User, error) {
 	user, isExist := s.users[Key]
 	if !isExist {
@@ -91,11 +93,11 @@ func (s memoryStorage) SelectUserByKey(Key int) (*core.User, error) {
 }
 
 // SelectUserURL возвращает перечень соответствий между оригинальным и коротким адресом для конкретного пользователя
-func (s memoryStorage) SelectUserURLHistory(user *core.User) (*[]core.UserURLPair, error) {
+func (s memoryStorage) SelectUserURLHistory(user *core.User) ([]core.UserURLPair, error) {
 	if s.userURLPairs[user.Key] == nil {
 		return nil, fmt.Errorf("нет истории")
 	}
-	return s.userURLPairs[user.Key], nil
+	return *s.userURLPairs[user.Key], nil
 }
 
 // getNextFreeKey возвращает ближайший свободный идентификатор пользователя
@@ -112,14 +114,19 @@ func (s memoryStorage) getNextFreeKey() int {
 	return maxNumber + 1
 }
 
-func (s memoryStorage) CloseConnection() {
-	fmt.Println("Закрыто")
+// Close закрывает доступ
+func (s memoryStorage) Close() {
+	logger.Log.Info("сделали вид, что закрыт доступ к хранению данных в памяти")
 }
 
+// DeleteURLs удаляет URL
 func (s memoryStorage) DeleteURLs(URLs []core.URL) error {
+	logger.Log.Info("сделали вид, что удалили URL из памяти")
 	return nil
 }
 
-func (s memoryStorage) PingDB() error {
+// Ping проверяет доступ
+func (s memoryStorage) Ping() error {
+	logger.Log.Info("сделали вид, что проверили доступ к памяти")
 	return nil
 }
