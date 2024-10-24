@@ -8,22 +8,21 @@ import (
 
 	"github.com/go-resty/resty/v2"
 	"github.com/golang/mock/gomock"
-	"github.com/rodeorm/shortener/internal/core"
 	"github.com/rodeorm/shortener/mocks"
 	"github.com/stretchr/testify/assert"
 )
 
-func TestRootURL(t *testing.T) {
+func TestDBPing(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
 	storage := mocks.NewMockStorager(ctrl)
 
-	storage.EXPECT().SelectOriginalURL(gomock.Any()).Return(&core.URL{Key: "Short", HasBeenDeleted: true}, nil).AnyTimes()
+	storage.EXPECT().Ping().Return(nil).AnyTimes()
 
 	s := Server{Storage: storage}
 
-	handler := http.HandlerFunc(s.RootURLHandler)
+	handler := http.HandlerFunc(s.PingDBHandler)
 	srv := httptest.NewServer(handler)
 	defer srv.Close()
 
@@ -34,14 +33,14 @@ func TestRootURL(t *testing.T) {
 		expectedCode int
 		expectedBody string
 	}{
-		{name: "проверка на попытку получить удаленный урл", method: http.MethodGet, expectedCode: http.StatusGone, requestURL: "deleted"},
+		{name: "обработка успешной попытки достучаться к БД", method: http.MethodGet, expectedCode: http.StatusOK, requestURL: "/ping"},
 	}
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
 			req := resty.New().R()
 			req.Method = tc.method
-			req.URL = srv.URL + "/" + tc.requestURL
+			req.URL = srv.URL
 			resp, err := req.Send()
 
 			assert.NoError(t, err, fmt.Sprintf("ошибка при попытке сделать запрос %s, ошибка: %s", req.URL, err))

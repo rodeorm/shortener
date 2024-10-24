@@ -1,6 +1,8 @@
 package main
 
-import "github.com/rodeorm/shortener/internal/api"
+import (
+	"github.com/rodeorm/shortener/internal/api"
+)
 
 /*
 Сервис для сокращения длинных URL. Требования:
@@ -12,6 +14,8 @@ import "github.com/rodeorm/shortener/internal/api"
 */
 
 func main() {
+
 	server := config()
+	profile(server.ProfileType)
 	api.ServerStart(server)
 }

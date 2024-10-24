@@ -1,0 +1,2094 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>shortener: Go Coverage Report</title>
+		<style>
+			body {
+				background: black;
+				color: rgb(80, 80, 80);
+			}
+			body, pre, #legend span {
+				font-family: Menlo, monospace;
+				font-weight: bold;
+			}
+			#topbar {
+				background: black;
+				position: fixed;
+				top: 0; left: 0; right: 0;
+				height: 42px;
+				border-bottom: 1px solid rgb(80, 80, 80);
+			}
+			#content {
+				margin-top: 50px;
+			}
+			#nav, #legend {
+				float: left;
+				margin-left: 10px;
+			}
+			#legend {
+				margin-top: 12px;
+			}
+			#nav {
+				margin-top: 10px;
+			}
+			#legend span {
+				margin: 0 5px;
+			}
+			.cov0 { color: rgb(192, 0, 0) }
+.cov1 { color: rgb(128, 128, 128) }
+.cov2 { color: rgb(116, 140, 131) }
+.cov3 { color: rgb(104, 152, 134) }
+.cov4 { color: rgb(92, 164, 137) }
+.cov5 { color: rgb(80, 176, 140) }
+.cov6 { color: rgb(68, 188, 143) }
+.cov7 { color: rgb(56, 200, 146) }
+.cov8 { color: rgb(44, 212, 149) }
+.cov9 { color: rgb(32, 224, 152) }
+.cov10 { color: rgb(20, 236, 155) }
+
+		</style>
+	</head>
+	<body>
+		<div id="topbar">
+			<div id="nav">
+				<select id="files">
+				
+				<option value="file0">github.com/rodeorm/shortener/cmd/shortener/config.go (0.0%)</option>
+				
+				<option value="file1">github.com/rodeorm/shortener/cmd/shortener/init.go (0.0%)</option>
+				
+				<option value="file2">github.com/rodeorm/shortener/cmd/shortener/main.go (0.0%)</option>
+				
+				<option value="file3">github.com/rodeorm/shortener/cmd/shortener/profile.go (0.0%)</option>
+				
+				<option value="file4">github.com/rodeorm/shortener/internal/api/api.go (0.0%)</option>
+				
+				<option value="file5">github.com/rodeorm/shortener/internal/api/apiShorten.go (76.0%)</option>
+				
+				<option value="file6">github.com/rodeorm/shortener/internal/api/apiShortenBatch.go (78.3%)</option>
+				
+				<option value="file7">github.com/rodeorm/shortener/internal/api/apiUserDeleteURLs.go (52.4%)</option>
+				
+				<option value="file8">github.com/rodeorm/shortener/internal/api/apiUserGetURLs.go (57.9%)</option>
+				
+				<option value="file9">github.com/rodeorm/shortener/internal/api/async.go (88.9%)</option>
+				
+				<option value="file10">github.com/rodeorm/shortener/internal/api/badRequest.go (0.0%)</option>
+				
+				<option value="file11">github.com/rodeorm/shortener/internal/api/cookie/cookie.go (58.8%)</option>
+				
+				<option value="file12">github.com/rodeorm/shortener/internal/api/dbPing.go (62.5%)</option>
+				
+				<option value="file13">github.com/rodeorm/shortener/internal/api/error.go (100.0%)</option>
+				
+				<option value="file14">github.com/rodeorm/shortener/internal/api/middleware/gzip.go (41.4%)</option>
+				
+				<option value="file15">github.com/rodeorm/shortener/internal/api/middleware/log.go (100.0%)</option>
+				
+				<option value="file16">github.com/rodeorm/shortener/internal/api/root.go (87.5%)</option>
+				
+				<option value="file17">github.com/rodeorm/shortener/internal/api/rootURL.go (54.5%)</option>
+				
+				<option value="file18">github.com/rodeorm/shortener/internal/api/userIdentity.go (91.7%)</option>
+				
+				<option value="file19">github.com/rodeorm/shortener/internal/core/rand.go (100.0%)</option>
+				
+				<option value="file20">github.com/rodeorm/shortener/internal/core/url.go (60.0%)</option>
+				
+				<option value="file21">github.com/rodeorm/shortener/internal/crypt/secret.go (84.6%)</option>
+				
+				<option value="file22">github.com/rodeorm/shortener/internal/logger/logger.go (80.0%)</option>
+				
+				<option value="file23">github.com/rodeorm/shortener/internal/repo/abstract.go (26.1%)</option>
+				
+				<option value="file24">github.com/rodeorm/shortener/internal/repo/file.go (0.0%)</option>
+				
+				<option value="file25">github.com/rodeorm/shortener/internal/repo/memory.go (45.6%)</option>
+				
+				<option value="file26">github.com/rodeorm/shortener/internal/repo/postgres.go (0.0%)</option>
+				
+				<option value="file27">github.com/rodeorm/shortener/mocks/mock_storager.go (91.7%)</option>
+				
+				</select>
+			</div>
+			<div id="legend">
+				<span>not tracked</span>
+			
+				<span class="cov0">not covered</span>
+				<span class="cov8">covered</span>
+			
+			</div>
+		</div>
+		<div id="content">
+		
+		<pre class="file" id="file0" style="display: none">package main
+
+import (
+        "flag"
+        "os"
+        "strconv"
+
+        "github.com/rodeorm/shortener/internal/api"
+        "github.com/rodeorm/shortener/internal/logger"
+        "github.com/rodeorm/shortener/internal/repo"
+)
+
+// config выполняет первоначальную конфигурацию
+func config() *api.Server <span class="cov0" title="0">{
+        flag.Parse()
+
+        // os.Setenv("SERVER_ADDRESS", "localhost:8080")
+        // os.Setenv("BASE_URL", "http://tiny")
+        // os.Setenv("FILE_STORAGE_PATH", "D:/file.txt")
+        // os.Setenv("DATABASE_DSN", "postgres://app:qqqQQQ123@localhost:5432/shortener?sslmode=disable")
+
+        var (
+                serverAddress, baseURL, fileStoragePath, databaseConnectionString string
+                workerCount, batchSize, queueSize, profileType                    int
+                err                                                               error
+        )
+
+        //Адрес запуска HTTP-сервера
+        if *a == "" </span><span class="cov0" title="0">{
+                serverAddress = os.Getenv("SERVER_ADDRESS")
+                if serverAddress == "" </span><span class="cov0" title="0">{
+                        serverAddress = "localhost:8080"
+                }</span>
+        } else<span class="cov0" title="0"> {
+                serverAddress = *a
+        }</span>
+
+        //Базовый адрес результирующего сокращённого URL
+        <span class="cov0" title="0">if *b == "" </span><span class="cov0" title="0">{
+                baseURL = os.Getenv("BASE_URL")
+                if baseURL == "" </span><span class="cov0" title="0">{
+                        baseURL = "http://localhost:8080"
+                }</span>
+        } else<span class="cov0" title="0"> {
+                baseURL = *b
+        }</span>
+
+        //Путь до файла
+        <span class="cov0" title="0">if *f == "" </span><span class="cov0" title="0">{
+                fileStoragePath = os.Getenv("FILE_STORAGE_PATH")
+        }</span> else<span class="cov0" title="0"> {
+                fileStoragePath = *f
+        }</span>
+
+        //Строка подключения к БД
+        <span class="cov0" title="0">if *d == "" </span><span class="cov0" title="0">{
+                databaseConnectionString = os.Getenv("DATABASE_DSN")
+        }</span> else<span class="cov0" title="0"> {
+                databaseConnectionString = *d
+        }</span>
+
+        <span class="cov0" title="0">if *w == "" </span><span class="cov0" title="0">{
+                workerCount = 2
+        }</span>
+
+        <span class="cov0" title="0">if *s == "" </span><span class="cov0" title="0">{
+                batchSize = 3
+        }</span>
+
+        <span class="cov0" title="0">if *q == "" </span><span class="cov0" title="0">{
+                queueSize = 10
+        }</span>
+
+        <span class="cov0" title="0">if *p == "" </span><span class="cov0" title="0">{
+                profileType = noneProfile
+        }</span> else<span class="cov0" title="0"> {
+                profileType, err = strconv.Atoi(*p)
+                if err != nil </span><span class="cov0" title="0">{
+                        profileType = noneProfile
+                }</span>
+        }
+
+        <span class="cov0" title="0">logger.Initialize("info")
+
+        server := &amp;api.Server{
+                ServerAddress: serverAddress,
+                Storage:       repo.NewStorage(fileStoragePath, databaseConnectionString),
+                DeleteQueue:   api.NewQueue(queueSize),
+                BaseURL:       baseURL,
+                WorkerCount:   workerCount,
+                BatchSize:     batchSize,
+                ProfileType:   profileType,
+        }
+
+        return server</span>
+}
+</pre>
+		
+		<pre class="file" id="file1" style="display: none">package main
+
+import (
+        "flag"
+)
+
+var a, b, f, d, w, s, q, p *string
+
+func init() <span class="cov0" title="0">{
+        //флаг -a, отвечающий за адрес запуска HTTP-сервера (переменная SERVER_ADDRESS)
+        a = flag.String("a", "", "SERVER_ADDRESS")
+        //флаг -b, отвечающий за базовый адрес результирующего сокращённого URL (переменная BASE_URL)
+        b = flag.String("b", "", "BASE_URL")
+        //флаг -f, отвечающий за путь до файла с сокращёнными URL (переменная FILE_STORAGE_PATH)
+        f = flag.String("f", "", "FILE_STORAGE_PATH")
+        //флаг -d, отвечающий за строку подключения к БД (переменная DATABASE_DSN)
+        d = flag.String("d", "", "DATABASE_DSN")
+        //флаг -w, отвечающий за число воркеров для удаления
+        w = flag.String("w", "", "WORKER_COUNTS")
+        //флаг -s, отвечающий за размер пачки для удаления
+        s = flag.String("s", "", "BUTCH_SIZE")
+        //флаг -q, отвечающий за размер очереди для удаления
+        q = flag.String("q", "", "DELETE_QUEUE_SIZE")
+        //флаг -p, отвечающий за тип профилирования
+        p = flag.String("p", "", "PROFILE_TYPE")
+}</span>
+
+// Типы профилирования приложения
+const (
+        noneProfile   = iota // Нет профилирования
+        baseProfile          // Профилирование в файл base
+        resultProfile        // Профилирование в файл result
+)
+</pre>
+		
+		<pre class="file" id="file2" style="display: none">package main
+
+import (
+        "github.com/rodeorm/shortener/internal/api"
+)
+
+/*
+Сервис для сокращения длинных URL. Требования:
+Сервер должен быть доступен по адресу: http://localhost:8080.
+Сервер должен предоставлять два эндпоинта: POST / и GET /{id}.
+Эндпоинт POST / принимает в теле запроса строку URL для сокращения и возвращает ответ с кодом 201 и сокращённым URL в виде текстовой строки в теле.
+Эндпоинт GET /{id} принимает в качестве URL-параметра идентификатор сокращённого URL и возвращает ответ с кодом 307 и оригинальным URL в HTTP-заголовке Location.
+Нужно учесть некорректные запросы и возвращать для них ответ с кодом 400.
+*/
+
+func main() <span class="cov0" title="0">{
+
+        server := config()
+        profile(server.ProfileType)
+        api.ServerStart(server)
+}</span>
+</pre>
+		
+		<pre class="file" id="file3" style="display: none">package main
+
+import (
+        "os"
+        "runtime"
+        "runtime/pprof"
+)
+
+func profile(profileType int) <span class="cov0" title="0">{
+        if profileType != noneProfile </span><span class="cov0" title="0">{
+                var (
+                        fmem *os.File
+                        err  error
+                )
+
+                if profileType == baseProfile </span><span class="cov0" title="0">{
+                        fmem, err = os.Create(`base.pprof`)
+                }</span> else<span class="cov0" title="0"> {
+                        fmem, err = os.Create(`result.pprof`)
+                }</span>
+                <span class="cov0" title="0">if err != nil </span><span class="cov0" title="0">{
+                        panic(err)</span>
+                }
+                <span class="cov0" title="0">defer fmem.Close()
+
+                runtime.GC()
+                if err := pprof.WriteHeapProfile(fmem); err != nil </span><span class="cov0" title="0">{
+                        panic(err)</span>
+                }
+        }
+}
+</pre>
+		
+		<pre class="file" id="file4" style="display: none">package api
+
+import (
+        "log"
+        "net/http"
+        "net/http/pprof"
+        "time"
+
+        "github.com/gorilla/mux"
+
+        "github.com/rodeorm/shortener/internal/api/middleware"
+        "github.com/rodeorm/shortener/internal/repo"
+)
+
+// ServerStart запускает веб-сервер
+func ServerStart(s *Server) error <span class="cov0" title="0">{
+
+        defer s.Storage.Close()
+        defer close(s.DeleteQueue.ch)
+
+        r := mux.NewRouter()
+        r.HandleFunc("/", s.RootHandler).Methods(http.MethodPost)
+        r.HandleFunc("/ping", s.PingDBHandler).Methods(http.MethodGet)
+        r.HandleFunc("/{URL}", s.RootURLHandler).Methods(http.MethodGet)
+
+        r.HandleFunc("/api/shorten", s.APIShortenHandler).Methods(http.MethodPost)
+        r.HandleFunc("/api/user/urls", s.APIUserGetURLsHandler).Methods(http.MethodGet)
+        r.HandleFunc("/api/user/urls", s.APIUserDeleteURLsHandler).Methods(http.MethodDelete)
+        r.HandleFunc("/api/shorten/batch", s.APIShortenBatchHandler).Methods(http.MethodPost)
+
+        r.HandleFunc("/", s.badRequestHandler)
+        r.Use(middleware.WithZip, middleware.WithLog)
+
+        pprofRouter := r.PathPrefix("/debug/pprof/").Subrouter()
+        pprofRouter.HandleFunc("/", pprof.Index)
+        pprofRouter.HandleFunc("/cmdline", pprof.Cmdline)
+        pprofRouter.HandleFunc("/profile", pprof.Profile)
+        pprofRouter.HandleFunc("/symbol", pprof.Symbol)
+        pprofRouter.HandleFunc("/trace", pprof.Trace)
+
+        srv := &amp;http.Server{
+                Handler:      r,
+                Addr:         s.ServerAddress,
+                WriteTimeout: 15 * time.Second,
+                ReadTimeout:  15 * time.Second,
+        }
+
+        for i := 0; i &lt; s.WorkerCount; i++ </span><span class="cov0" title="0">{
+                w := NewWorker(i, s.DeleteQueue, s.Storage, s.BatchSize)
+                go w.loop()
+        }</span>
+
+        <span class="cov0" title="0">log.Fatal(srv.ListenAndServe())
+
+        return nil</span>
+}
+
+// Server абстракция, отражающая веб-сервер и его характеристики
+type Server struct {
+        //Количество воркеров, асинхронно удаляющих url
+        WorkerCount int
+        //Размер пачки для удаления
+        BatchSize int
+        //Тип профилирования (если необходимо)
+        ProfileType int
+
+        //Адрес запуска веб-сервера
+        ServerAddress string
+        //Базовый URL для сокращенных адресов
+        BaseURL string
+        //Connection string для БД
+        DatabaseConnectionString string
+
+        //Хранилище данных
+        Storage repo.Storager
+        //Очередь удаления
+        DeleteQueue *Queue
+}
+</pre>
+		
+		<pre class="file" id="file5" style="display: none">package api
+
+import (
+        "encoding/json"
+        "fmt"
+        "io"
+        "net/http"
+
+        "github.com/rodeorm/shortener/internal/core"
+)
+
+// APIShortenHandler принимает в теле запроса JSON-объект {"url":"&lt;some_url&gt;"} и возвращает в ответ объект {"result":"&lt;shorten_url&gt;"}.
+func (h Server) APIShortenHandler(w http.ResponseWriter, r *http.Request) <span class="cov8" title="1">{
+        url := core.URL{}
+        shortURL := core.ShortenURL{}
+
+        w, user, err := h.getUserIdentity(w, r)
+        if err != nil </span><span class="cov0" title="0">{
+                handleError(w, err, "APIShortenHandler 1")
+                return
+        }</span>
+
+        <span class="cov8" title="1">bodyBytes, _ := io.ReadAll(r.Body)
+        err = json.Unmarshal(bodyBytes, &amp;url)
+        if err != nil </span><span class="cov8" title="1">{
+                handleError(w, err, "APIShortenHandler 2")
+                return
+        }</span>
+
+        <span class="cov8" title="1">urlFromStorage, err := h.Storage.InsertURL(url.Key, h.BaseURL, user)
+        url = *urlFromStorage
+        if err != nil </span><span class="cov0" title="0">{
+                handleError(w, err, "APIShortenHandler 3")
+                return
+        }</span>
+        <span class="cov8" title="1">w.Header().Set("Content-Type", "application/json")
+        shortURL.Key = h.BaseURL + "/" + url.Key
+        if url.HasBeenShorted </span><span class="cov0" title="0">{
+                w.WriteHeader(http.StatusConflict)
+        }</span> else<span class="cov8" title="1"> {
+                w.WriteHeader(http.StatusCreated)
+        }</span>
+
+        <span class="cov8" title="1">bodyBytes, err = json.Marshal(shortURL)
+        if err != nil </span><span class="cov0" title="0">{
+                handleError(w, err, "APIShortenHandler 4")
+        }</span>
+        <span class="cov8" title="1">fmt.Fprint(w, string(bodyBytes))</span>
+}
+</pre>
+		
+		<pre class="file" id="file6" style="display: none">package api
+
+import (
+        "encoding/json"
+        "fmt"
+        "io"
+        "net/http"
+
+        "github.com/rodeorm/shortener/internal/core"
+)
+
+// APIShortenBatchHandler обрабатывает методы POST для маршрута /api/shorten/batch, принимает в теле запроса множество URL для сокращения в формате:
+//
+/*
+[
+
+        {
+            "correlation_id": "&lt;строковый идентификатор&gt;",
+            "original_url": "&lt;URL для сокращения&gt;"
+        },
+        ...
+
+]
+В качестве ответа возвращает данные в формате:
+[
+
+        {
+            "correlation_id": "&lt;строковый идентификатор из объекта запроса&gt;",
+            "short_url": "&lt;результирующий сокращённый URL&gt;"
+        },
+        ...
+
+]
+*/
+func (h Server) APIShortenBatchHandler(w http.ResponseWriter, r *http.Request) <span class="cov8" title="1">{
+        w, user, err := h.getUserIdentity(w, r)
+
+        if err != nil </span><span class="cov0" title="0">{
+                handleError(w, err, "APIShortenBatch 1")
+                return
+        }</span>
+
+        <span class="cov8" title="1">var (
+                urlReq []core.URLWithCorrelationRequest
+                urlRes []core.URLWithCorrelationResponse
+        )
+
+        bodyBytes, _ := io.ReadAll(r.Body)
+        err = json.Unmarshal(bodyBytes, &amp;urlReq)
+        if err != nil </span><span class="cov0" title="0">{
+                handleError(w, err, "APIShortenBatch 2")
+                return
+        }</span>
+
+        <span class="cov8" title="1">for _, value := range urlReq </span><span class="cov8" title="1">{
+                url, err := h.Storage.InsertURL(value.Origin, h.BaseURL, user)
+                if err != nil </span><span class="cov8" title="1">{
+                        handleError(w, err, "APIShortenBatch 3")
+                        return
+                }</span>
+                <span class="cov8" title="1">urlResPart := core.URLWithCorrelationResponse{CorID: value.CorID, Short: h.BaseURL + "/" + url.Key}
+                urlRes = append(urlRes, urlResPart)</span>
+        }
+
+        <span class="cov8" title="1">w.Header().Set("Content-Type", "application/json")
+        w.WriteHeader(http.StatusCreated)
+
+        bodyBytes, err = json.Marshal(urlRes)
+        if err != nil </span><span class="cov0" title="0">{
+                handleError(w, err, "APIShortenBatch 4")
+        }</span>
+        <span class="cov8" title="1">fmt.Fprint(w, string(bodyBytes))</span>
+}
+</pre>
+		
+		<pre class="file" id="file7" style="display: none">package api
+
+import (
+        "fmt"
+        "io"
+        "net/http"
+
+        "github.com/rodeorm/shortener/internal/core"
+)
+
+/*
+Хендлер DELETE /api/user/urls, который в теле запроса принимает список идентификаторов сокращённых URL для асинхронного удаления. Запрос может быть таким:
+DELETE http://localhost:8080/api/user/urls
+Content-Type: application/json
+
+["6qxTVvsy", "RTfd56hn", "Jlfd67ds"]
+В случае успешного приёма запроса хендлер должен возвращать HTTP-статус 202 Accepted. Фактический результат удаления может происходить позже — оповещать пользователя об успешности или неуспешности не нужно.
+Успешно удалить URL может пользователь, его создавший.
+*/
+func (h Server) APIUserDeleteURLsHandler(w http.ResponseWriter, r *http.Request) <span class="cov8" title="1">{
+        w, user, err := h.getUserIdentity(w, r)
+        if user.WasUnathorized </span><span class="cov0" title="0">{
+                w.WriteHeader(http.StatusUnauthorized)
+                return
+        }</span>
+        <span class="cov8" title="1">if err != nil </span><span class="cov0" title="0">{
+                handleError(w, err, "APIUserDeleteURLsHandler 1")
+                return
+        }</span>
+
+        <span class="cov8" title="1">bodyBytes, err := io.ReadAll(r.Body)
+        if err != nil </span><span class="cov0" title="0">{
+                handleError(w, err, "APIUserDeleteURLsHandler 2")
+                return
+        }</span>
+
+        // Помещаем URL в очередь на асинхронное удаление. В случае успешного приёма запроса хендлер должен возвращать HTTP-статус 202 Accepted.
+        <span class="cov8" title="1">urls, err := core.GetURLsFromString(string(bodyBytes), user)
+
+        if err != nil </span><span class="cov0" title="0">{
+                handleError(w, err, "APIUserDeleteURLsHandler 3")
+                return
+        }</span>
+        <span class="cov8" title="1">err = h.DeleteQueue.Push(urls)
+        if err != nil </span><span class="cov0" title="0">{
+                handleError(w, err, "APIUserDeleteURLsHandler 4")
+                return
+        }</span>
+        <span class="cov8" title="1">w.WriteHeader(http.StatusAccepted)
+        fmt.Fprint(w, string(bodyBytes))</span>
+}
+</pre>
+		
+		<pre class="file" id="file8" style="display: none">package api
+
+import (
+        "encoding/json"
+        "fmt"
+        "net/http"
+)
+
+// APIUserGetURLsHandler возвращает пользователю все когда-либо сокращённые им URL в формате JSON
+func (h Server) APIUserGetURLsHandler(w http.ResponseWriter, r *http.Request) <span class="cov8" title="1">{
+        w, user, err := h.getUserIdentity(w, r)
+
+        if user.WasUnathorized </span><span class="cov0" title="0">{
+                w.WriteHeader(http.StatusUnauthorized)
+                return
+        }</span>
+
+        <span class="cov8" title="1">if err != nil </span><span class="cov0" title="0">{
+                handleError(w, err, "APIUserGetURLsHandler 1")
+                return
+        }</span>
+        <span class="cov8" title="1">history, err := h.Storage.SelectUserURLHistory(user)
+        if err != nil </span><span class="cov0" title="0">{
+                handleError(w, err, "APIUserGetURLsHandler 1")
+                return
+        }</span>
+
+        //Не очень изящно, конечно. Т.к. не хочется слишком много мест переделывать
+        <span class="cov8" title="1">for i, v := range history </span><span class="cov8" title="1">{
+                history[i].Short = fmt.Sprintf("%s/%s", h.BaseURL, v.Short)
+        }</span>
+
+        <span class="cov8" title="1">bodyBytes, err := json.Marshal(history)
+        if err != nil </span><span class="cov0" title="0">{
+                handleError(w, err, "APIUserGetURLsHandler 1")
+                return
+        }</span>
+
+        <span class="cov8" title="1">w.Header().Set("Content-Type", "application/json")
+        fmt.Fprint(w, string(bodyBytes))</span>
+}
+</pre>
+		
+		<pre class="file" id="file9" style="display: none">package api
+
+import (
+        "fmt"
+        "sync"
+
+        "github.com/rodeorm/shortener/internal/core"
+        "github.com/rodeorm/shortener/internal/logger"
+        "github.com/rodeorm/shortener/internal/repo"
+)
+
+// Push помещает пачку URL в очередь
+func (q *Queue) Push(url []core.URL) error <span class="cov8" title="1">{
+        var wg sync.WaitGroup
+
+        for _, v := range url </span><span class="cov8" title="1">{
+                wg.Add(1)
+                go func() </span><span class="cov8" title="1">{
+                        q.ch &lt;- &amp;v
+                        wg.Done()
+                }</span>()
+        }
+
+        <span class="cov8" title="1">wg.Wait()
+        return nil</span>
+}
+
+// NewQueue создает новую очередь URL размером n
+func NewQueue(n int) *Queue <span class="cov0" title="0">{
+        return &amp;Queue{
+                ch: make(chan *core.URL, n),
+        }
+}</span>
+
+// Queue очередь на удаление URL
+type Queue struct {
+        ch chan *core.URL
+}
+
+// PopWait извлекает пачку URL из очереди на удаление
+func (q *Queue) popWait(n int) []core.URL <span class="cov8" title="1">{
+
+        urls := make([]core.URL, 0)
+        for i := 0; i &lt; n; i++ </span><span class="cov8" title="1">{
+                select </span>{
+                case val := &lt;-q.ch:<span class="cov8" title="1">
+                        urls = append(urls, *val)</span>
+                default:<span class="cov8" title="1">
+                        continue</span>
+                }
+        }
+        <span class="cov8" title="1">return urls</span>
+}
+
+// Worker структура, удаляющая URL
+type Worker struct {
+        id        int
+        batchSize int
+        queue     *Queue
+        storage   repo.Storager
+}
+
+// NewWorker создает новый Worker
+func NewWorker(id int, queue *Queue, storage repo.Storager, batchSize int) *Worker <span class="cov8" title="1">{
+        w := Worker{
+                id:        id,
+                queue:     queue,
+                storage:   storage,
+                batchSize: batchSize,
+        }
+        return &amp;w
+}</span>
+
+// Loop основной рабочий метод Worker
+func (w *Worker) loop() <span class="cov8" title="1">{
+        logger.Log.Info(fmt.Sprintf("воркер #%d стартовал", w.id))
+
+        for </span><span class="cov8" title="1">{
+                urls := w.queue.popWait(w.batchSize)
+
+                if len(urls) == 0 </span><span class="cov8" title="1">{
+                        continue</span>
+                }
+                <span class="cov8" title="1">err := w.storage.DeleteURLs(urls)
+                if err != nil </span><span class="cov0" title="0">{
+                        logger.Log.Error(fmt.Sprintf("ошибка при работе воркера %v стартовал", err))
+                        continue</span>
+                }
+                <span class="cov8" title="1">logger.Log.Info(fmt.Sprintf("воркер #%d удалил пачку урл %v", w.id, urls))</span>
+        }
+}
+</pre>
+		
+		<pre class="file" id="file10" style="display: none">package api
+
+import (
+        "net/http"
+)
+
+// BadRequestHandler обрабатывает некорректные запросы и возвращает статус 400 BadRequest
+func (h Server) badRequestHandler(w http.ResponseWriter, r *http.Request) <span class="cov0" title="0">{
+        w.WriteHeader(http.StatusBadRequest)
+}</span>
+</pre>
+		
+		<pre class="file" id="file11" style="display: none">package cookie
+
+import (
+        "fmt"
+        "net/http"
+        "strconv"
+
+        "github.com/rodeorm/shortener/internal/crypt"
+)
+
+// GetUserKeyFromCookie получает идентфикатор пользователя из куки "токен"
+func GetUserKeyFromCookie(r *http.Request) (string, error) <span class="cov8" title="1">{
+        tokenCookie, err := r.Cookie("token")
+        if err != nil </span><span class="cov8" title="1">{
+                return "", err
+        }</span>
+        <span class="cov8" title="1">if tokenCookie.Value == "" </span><span class="cov0" title="0">{
+                return "", fmt.Errorf("не найдено актуальных cookie")
+        }</span>
+        <span class="cov8" title="1">userKey, err := crypt.Decrypt(tokenCookie.Value)
+        if err != nil </span><span class="cov0" title="0">{
+                return "", err
+        }</span>
+
+        <span class="cov8" title="1">_, err = strconv.Atoi(userKey)
+
+        if err != nil </span><span class="cov8" title="1">{
+                return "", err
+        }</span>
+
+        <span class="cov8" title="1">return userKey, nil</span>
+}
+
+// PutUserKeyToCookie помещает идентификатор пользователя в  куки "токен"
+func PutUserKeyToCookie(Key string) *http.Cookie <span class="cov0" title="0">{
+        val, err := crypt.Encrypt(Key)
+        if err != nil </span><span class="cov0" title="0">{
+                panic(err)</span>
+        }
+
+        <span class="cov0" title="0">cookie := &amp;http.Cookie{
+                Name:   "token",
+                Value:  val,
+                MaxAge: 10000,
+        }
+        return cookie</span>
+}
+</pre>
+		
+		<pre class="file" id="file12" style="display: none">package api
+
+import (
+        "fmt"
+        "net/http"
+
+        "github.com/rodeorm/shortener/internal/logger"
+)
+
+// PingDBHandler - обработчик для метода GET для маршрута /ping, который при запросе проверяет соединение с базой данных.
+//
+// При успешной проверке возвращает статус 200 OK, при неуспешной — 500 Internal Server Error.
+func (h Server) PingDBHandler(w http.ResponseWriter, r *http.Request) <span class="cov8" title="1">{
+        err := h.Storage.Ping()
+        if err == nil </span><span class="cov8" title="1">{
+                logger.Log.Info("успешная попытка ping")
+                fmt.Fprintf(w, "%s", "Успешное соединение с БД")
+                w.WriteHeader(http.StatusOK)
+        }</span> else<span class="cov0" title="0"> {
+                logger.Log.Info("провальная попытка ping")
+                w.WriteHeader(http.StatusInternalServerError)
+                fmt.Fprintf(w, "%s", "Ошибка соединения с БД")
+        }</span>
+}
+</pre>
+		
+		<pre class="file" id="file13" style="display: none">package api
+
+import (
+        "net/http"
+
+        "go.uber.org/zap"
+
+        "github.com/rodeorm/shortener/internal/logger"
+)
+
+// handleError обрабатывает ошибки
+func handleError(w http.ResponseWriter, err error, message string) <span class="cov8" title="1">{
+        logger.Log.Error(err.Error(),
+                zap.String(message, err.Error()),
+        )
+        w.WriteHeader(http.StatusBadRequest)
+}</span>
+</pre>
+		
+		<pre class="file" id="file14" style="display: none">package middleware
+
+import (
+        "bytes"
+        "compress/gzip"
+        "fmt"
+        "io"
+        "net/http"
+        "strings"
+)
+
+// WithLog - middleware для сжатия/распаковки
+func WithZip(next http.Handler) http.Handler <span class="cov8" title="1">{
+        return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) </span><span class="cov8" title="1">{
+                if !strings.Contains(r.Header.Get("Accept-Encoding"), "gzip") </span><span class="cov0" title="0">{
+                        next.ServeHTTP(w, r)
+                        return
+                }</span>
+
+                <span class="cov8" title="1">gz, err := gzip.NewWriterLevel(w, gzip.BestSpeed)
+                if err != nil </span><span class="cov0" title="0">{
+                        io.WriteString(w, err.Error())
+                        return
+                }</span>
+                <span class="cov8" title="1">defer gz.Close()
+
+                bodyBytes, _ := io.ReadAll(r.Body)
+                if IsGzip(r.Header) </span><span class="cov0" title="0">{
+                        bodyBytes, _ = DecompressGzip(bodyBytes)
+                }</span>
+
+                <span class="cov8" title="1">r.Body = io.NopCloser(strings.NewReader(string(bodyBytes)))
+
+                w.Header().Set("Content-Encoding", "gzip")
+                next.ServeHTTP(gzipWriter{ResponseWriter: w, Writer: gz}, r)</span>
+        })
+}
+
+// gzipWriter - абстракция над Writer и ResponseWriter
+type gzipWriter struct {
+        http.ResponseWriter
+        Writer io.Writer
+}
+
+// Writer - синтаксическое упрощение для доступа к методу io.Writer
+func (w gzipWriter) Write(b []byte) (int, error) <span class="cov0" title="0">{
+        return w.Writer.Write(b)
+}</span>
+
+// DecompressGzip осуществляет декомпрессию данных, сжатых gzip
+func DecompressGzip(data []byte) ([]byte, error) <span class="cov0" title="0">{
+        r, err := gzip.NewReader(bytes.NewReader(data))
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("ошибка при декомпрессии данных из gzip: %v", err)
+        }</span>
+        <span class="cov0" title="0">defer r.Close()
+
+        var b bytes.Buffer
+        _, err = b.ReadFrom(r)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("ошибка при декомпрессии данных из gzip: %v", err)
+        }</span>
+
+        <span class="cov0" title="0">return b.Bytes(), nil</span>
+}
+
+// IsGzip  проверяет по заголовкам, поддерживается ли сжатие gzip
+func IsGzip(headers map[string][]string) bool <span class="cov8" title="1">{
+        for _, value := range headers["Content-Encoding"] </span><span class="cov0" title="0">{
+                if value == "application/gzip" || value == "gzip" </span><span class="cov0" title="0">{
+                        return true
+                }</span>
+        }
+        <span class="cov8" title="1">return false</span>
+}
+</pre>
+		
+		<pre class="file" id="file15" style="display: none">package middleware
+
+import (
+        "net/http"
+        "time"
+
+        "github.com/rodeorm/shortener/internal/logger"
+        "go.uber.org/zap"
+)
+
+// WithLog - middleware для логирования запросов и ответов
+func WithLog(h http.Handler) http.Handler <span class="cov8" title="1">{
+        logFn := func(w http.ResponseWriter, r *http.Request) </span><span class="cov8" title="1">{
+                start := time.Now()
+
+                responseData := &amp;responseData{
+                        status: 0,
+                        size:   0,
+                }
+                lw := loggingResponseWriter{
+                        ResponseWriter: w,
+                        responseData:   responseData,
+                }
+                h.ServeHTTP(&amp;lw, r)
+
+                duration := time.Since(start)
+
+                logger.Log.Info("request",
+                        zap.String("method", r.Method),
+                        zap.String("url", r.URL.String()),
+                        zap.Float64("duration_ms", duration.Seconds()*1000),
+                        zap.Int("status", responseData.status),
+                        zap.Int("size", responseData.size),
+                )
+        }</span>
+        <span class="cov8" title="1">return http.HandlerFunc(logFn)</span>
+}
+
+type (
+        //responseData - данные ответа для логирования
+        responseData struct {
+                status int
+                size   int
+        }
+        //loggingResponseWriter - декорированная абстракция для ResponseWriter
+        loggingResponseWriter struct {
+                http.ResponseWriter
+                responseData *responseData
+        }
+)
+
+// Write записывает размер
+func (r *loggingResponseWriter) Write(b []byte) (int, error) <span class="cov8" title="1">{
+        size, err := r.ResponseWriter.Write(b)
+        r.responseData.size += size // захватываем размер
+        return size, err
+}</span>
+
+// WriteHeader записывает код статуса
+func (r *loggingResponseWriter) WriteHeader(statusCode int) <span class="cov8" title="1">{
+        r.ResponseWriter.WriteHeader(statusCode)
+        r.responseData.status = statusCode // захватываем код статуса
+}</span>
+</pre>
+		
+		<pre class="file" id="file16" style="display: none">package api
+
+import (
+        "fmt"
+        "io"
+        "net/http"
+)
+
+// RootHandler принимает POST запрос. В теле запроса строку надо передать URL для сокращения.
+//
+// Возвращает ответ с кодом 201 и сокращённым URL в виде текстовой строки в теле, если удалось сократить URL без ошибок.
+// Возвращает ответ с кодом 409, если URL был сокращен ранее.
+// Возвращает ответ с кодом 400, если возникает ошибка.
+func (h Server) RootHandler(w http.ResponseWriter, r *http.Request) <span class="cov8" title="1">{
+
+        w, user, err := h.getUserIdentity(w, r)
+        if err != nil </span><span class="cov0" title="0">{
+                handleError(w, err, "RootHandler 1")
+                return
+        }</span>
+
+        <span class="cov8" title="1">bodyBytes, _ := io.ReadAll(r.Body)
+        bodyString := string(bodyBytes)
+        url, err := h.Storage.InsertURL(bodyString, h.BaseURL, user)
+        if err != nil </span><span class="cov8" title="1">{
+                handleError(w, err, "RootHandler 2")
+                return
+        }</span>
+        <span class="cov8" title="1">w.Header().Set("Content-Type", "text/html; charset=utf-8")
+        if url.HasBeenShorted </span><span class="cov8" title="1">{
+                w.WriteHeader(http.StatusConflict)
+        }</span> else<span class="cov8" title="1"> {
+                w.WriteHeader(http.StatusCreated)
+        }</span>
+        <span class="cov8" title="1">body := fmt.Sprintf("%s/%s", h.BaseURL, url.Key)
+        w.Write([]byte(body))</span>
+}
+</pre>
+		
+		<pre class="file" id="file17" style="display: none">package api
+
+import (
+        "fmt"
+        "net/http"
+
+        "github.com/gorilla/mux"
+)
+
+// RootURLHandler обработчик метода GET для маршрута ./{id} принимает в качестве URL-параметра идентификатор сокращённого URL и перебрасывает по оригинальному URL.
+//
+// Для переброски возвращает ответ со статусом 307 TemporaryRedirect и оригинальным URL в HTTP-заголовке Location.
+// Для некорректных запросов возвращает ответ со статусом 400 BadRequest.
+// При запросе удалённого URL с помощью хендлера возвращается ответ со статусом 410 Gone.
+func (h Server) RootURLHandler(w http.ResponseWriter, r *http.Request) <span class="cov8" title="1">{
+        currentID := mux.Vars(r)["URL"]
+        url, err := h.Storage.SelectOriginalURL(currentID)
+
+        if err != nil </span><span class="cov0" title="0">{
+                handleError(w, err, "RootHandler 1")
+        }</span>
+
+        <span class="cov8" title="1">if url.HasBeenDeleted </span><span class="cov8" title="1">{
+                w.WriteHeader(http.StatusGone)
+                return
+        }</span>
+        <span class="cov0" title="0">w.Header().Set("Content-Type", "text/html; charset=utf-8")
+        w.Header().Set("Location", url.OriginalURL)
+        w.WriteHeader(http.StatusTemporaryRedirect)
+        fmt.Fprintf(w, "%s", url.OriginalURL)</span>
+}
+</pre>
+		
+		<pre class="file" id="file18" style="display: none">package api
+
+import (
+        "fmt"
+        "net/http"
+        "strconv"
+
+        cookie "github.com/rodeorm/shortener/internal/api/cookie"
+        "github.com/rodeorm/shortener/internal/core"
+)
+
+// getUserIdentity определяет по кукам какой пользователь авторизовался, если куки некорректные, то создает нового пользователя и новые куки, но возвращает совместно с ними и ошибку
+func (h Server) getUserIdentity(w http.ResponseWriter, r *http.Request) (http.ResponseWriter, *core.User, error) <span class="cov8" title="1">{
+        userKey, err := cookie.GetUserKeyFromCookie(r)
+        user := &amp;core.User{}
+
+        if err != nil </span><span class="cov8" title="1">{
+                user.WasUnathorized = true
+        }</span>
+
+        <span class="cov8" title="1">key, err := strconv.Atoi(userKey)
+        // Если идентификатор - это не число, то пользователь точно не авторизован. key остается со значением по умолчанию.
+        if err != nil </span><span class="cov8" title="1">{
+                user.WasUnathorized = true
+        }</span>
+        <span class="cov8" title="1">user, err = h.Storage.InsertUser(key)
+        if err != nil </span><span class="cov0" title="0">{
+                handleError(w, err, "GetUserIdentity")
+        }</span>
+        <span class="cov8" title="1">http.SetCookie(w, cookie.PutUserKeyToCookie(fmt.Sprint(user.Key)))
+        return w, user, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file19" style="display: none">package core
+
+import (
+        "fmt"
+        "math/rand"
+        "time"
+)
+
+var letters = []rune("abcdefghijklmnopqrstuvwxyz")
+
+// ReturnShortKey возвращает рандомный ключ (используем для генерации коротких URL)
+func ReturnShortKey(n int) (string, error) <span class="cov8" title="1">{
+        if n &lt;= 0 </span><span class="cov8" title="1">{
+                return "", fmt.Errorf("некорректное значение ключа %v", n)
+        }</span>
+        <span class="cov8" title="1">rand.New(rand.NewSource(time.Now().UnixNano()))
+        b := make([]rune, n)
+        for i := range b </span><span class="cov8" title="1">{
+                b[i] = letters[rand.Intn(len(letters))]
+        }</span>
+        <span class="cov8" title="1">return string(b), nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file20" style="display: none">package core
+
+import (
+        "fmt"
+        "net/url"
+        "regexp"
+        "strings"
+)
+
+// GetClearURL делает URL строчным, убирает наименование домена
+func GetClearURL(s string, d string) string <span class="cov0" title="0">{
+        s = strings.ToLower(s)
+        return strings.Replace(s, d, "", 1)
+}</span>
+
+// CheckURLValidity проверяет URL на корректность
+func CheckURLValidity(u string) bool <span class="cov0" title="0">{
+        _, err := url.ParseRequestURI(u)
+        return err == nil
+}</span>
+
+// CheckURLValidityByRegExp проверяет URL на корректность через regexp
+func CheckURLValidityByRegExp(u string) bool <span class="cov0" title="0">{
+        var urlRegex = regexp.MustCompile(`^(http|https)://[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(/[a-zA-Z0-9-._~:?#@!$&amp;'()*+,;=]*)*$`)
+        return urlRegex.MatchString(u)
+}</span>
+
+// GetURLsFromString получает строку, содержащую URL и пользователя.
+// Возвращает слайс URL или ошибку
+func GetURLsFromString(s string, u *User) ([]URL, error) <span class="cov8" title="1">{
+        if u.Key &lt;= 0 </span><span class="cov8" title="1">{
+                return nil, fmt.Errorf("некорректный пользователь: %d", u.Key)
+        }</span>
+        <span class="cov8" title="1">if s == "" </span><span class="cov8" title="1">{
+                return nil, fmt.Errorf("пустая строка с url")
+        }</span>
+
+        <span class="cov8" title="1">var replacer = strings.NewReplacer(" ", "", "\"", "", "[", "", "]", "")
+        urls := make([]URL, 0)
+        for _, v := range strings.Split(replacer.Replace(s), ",") </span><span class="cov8" title="1">{
+                urls = append(urls, URL{Key: v, UserKey: u.Key})
+        }</span>
+        <span class="cov8" title="1">return urls, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file21" style="display: none">package crypt
+
+import (
+        "crypto/aes"
+        "crypto/cipher"
+        "crypto/sha256"
+        "encoding/base64"
+)
+
+// bytes - слайс байт для шифрования
+var bytes = []byte{35, 46, 57, 24, 85, 35, 24, 74, 87, 35, 88, 98, 66, 32, 14, 05}
+
+// MySecret - это секретный ключ
+const MySecret string = "top secret key" // в проде можно было бы рандомно генерировать, но для текущих целей не нужно
+
+// Encrypt шифрует идентификатор пользователя
+func Encrypt(text string) (string, error) <span class="cov8" title="1">{
+        key := sha256.Sum256([]byte(MySecret))
+        block, err := aes.NewCipher(key[:])
+        if err != nil </span><span class="cov0" title="0">{
+                return "", err
+        }</span>
+        <span class="cov8" title="1">plainText := []byte(text)
+        cfb := cipher.NewCFBEncrypter(block, bytes)
+        cipherText := make([]byte, len(plainText))
+        cfb.XORKeyStream(cipherText, plainText)
+        return Encode(cipherText), nil</span>
+}
+
+// Decrypt расшифровывает идентификатор пользователя
+func Decrypt(text string) (string, error) <span class="cov8" title="1">{
+        key := sha256.Sum256([]byte(MySecret))
+        _, err := base64.StdEncoding.DecodeString(text)
+        if err != nil </span><span class="cov0" title="0">{
+                return "", err
+        }</span>
+        <span class="cov8" title="1">block, err := aes.NewCipher([]byte(key[:]))
+        if err != nil </span><span class="cov0" title="0">{
+                return "", err
+        }</span>
+
+        <span class="cov8" title="1">cipherText := Decode(text)
+        cfb := cipher.NewCFBDecrypter(block, bytes)
+        plainText := make([]byte, len(cipherText))
+        cfb.XORKeyStream(plainText, cipherText)
+        return string(plainText), nil</span>
+}
+
+// Encode кодирует слайс байт в строку
+func Encode(b []byte) string <span class="cov8" title="1">{
+        return base64.StdEncoding.EncodeToString(b)
+}</span>
+
+// Decode декодирует строку в слайсбайт
+func Decode(s string) []byte <span class="cov8" title="1">{
+        data, err := base64.StdEncoding.DecodeString(s)
+        if err != nil </span><span class="cov0" title="0">{
+                panic(err)</span>
+        }
+        <span class="cov8" title="1">return data</span>
+}
+</pre>
+		
+		<pre class="file" id="file22" style="display: none">package logger
+
+import (
+        "go.uber.org/zap"
+)
+
+// Log будет доступен всему коду как синглтон.
+// Никакой код, кроме функции Initialize, не должен модифицировать эту переменную.
+var Log *zap.Logger = zap.NewNop()
+
+// Initialize инициализирует синглтон логера с необходимым уровнем логирования.
+func Initialize(level string) error <span class="cov8" title="1">{
+
+        lvl, err := zap.ParseAtomicLevel(level)
+        if err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+
+        <span class="cov8" title="1">cfg := zap.NewProductionConfig()
+        cfg.Level = lvl
+        zl, err := cfg.Build()
+        if err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+
+        <span class="cov8" title="1">Log = zl
+        return nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file23" style="display: none">package repo
+
+import (
+        "context"
+
+        "github.com/jmoiron/sqlx"
+        "github.com/rodeorm/shortener/internal/core"
+        "github.com/rodeorm/shortener/internal/logger"
+        "go.uber.org/zap"
+)
+
+// Storager - абстрация для взаимодействия с хранилищем данных
+type Storager interface {
+        /*
+                InsertURL принимает оригинальный URL, базовый урл для генерации коротких адресов и пользователя.
+                Генерирует уникальный ключ для короткого адреса, сохраняет соответствие оригинального URL и ключа.
+
+                Возвращает обновленный URL с соответствующим сокращенным URL, а также признаком того, что URL сократили ранее.
+        */
+        InsertURL(URL, baseURL string, user *core.User) (*core.URL, error)
+
+        // SelectOriginalURL возвращает URL на основании короткого
+        SelectOriginalURL(shortURL string) (*core.URL, error)
+
+        // InsertUser сохраняет нового пользователя или возвращает уже имеющегося в наличии, а также значение "отсутствие авторизации по переданному идентификатору"
+        InsertUser(Key int) (*core.User, error)
+
+        // SelectUserURLHistory возвращает перечень соответствий между оригинальным и коротким адресом для конкретного пользователя
+        SelectUserURLHistory(user *core.User) ([]core.UserURLPair, error)
+
+        // DeleteURLs массово помечает URL как удаленные. Успешно удалить URL может только пользователь, его создавший.
+        DeleteURLs(URLs []core.URL) error
+
+        // Ниже методы специфичные для СУБД
+        // Можно, конечно, определить несколько интерфейсов (чтобы специфичный для СУБД включал в себя интерфейсы общие)
+        // Но это как показала практика - это лишние трудозатраты, усложняющие читабельность кода в местах использования интерфейса, поэтому вернул как было
+
+        // Close закрывает соединение
+        Close()
+        // Ping проверяет соединение
+        Ping() error
+}
+
+// NewStorage определяет место для хранения данных
+func NewStorage(filePath, dbConnectionString string) Storager <span class="cov8" title="1">{
+        var storage Storager
+
+        storage, err := InitPostgresStorage(dbConnectionString)
+        if err == nil </span><span class="cov0" title="0">{
+                return storage
+        }</span>
+
+        <span class="cov8" title="1">if filePath != "" </span><span class="cov0" title="0">{
+                storage, err = InitFileStorage(filePath)
+                if err == nil </span><span class="cov0" title="0">{
+                        return storage
+                }</span>
+        }
+        <span class="cov8" title="1">storage = InitMemoryStorage()
+        return storage</span>
+}
+
+// InitMemoryStorage создает хранилище данных в оперативной памяти
+func InitMemoryStorage() *memoryStorage <span class="cov8" title="1">{
+        ots := make(map[string]string)
+        sto := make(map[string]string)
+        usr := make(map[int]*core.User)
+        usrURL := make(map[int]*[]core.UserURLPair)
+        storage := memoryStorage{originalToShort: ots, shortToOriginal: sto, users: usr, userURLPairs: usrURL}
+
+        logger.Log.Info("Init storage",
+                zap.String("Storage", "Memory storage"),
+        )
+
+        return &amp;storage
+}</span>
+
+// InitFileStorage создает хранилище данных на файловой системе
+func InitFileStorage(filePath string) (*fileStorage, error) <span class="cov0" title="0">{
+        usr := make(map[int]*core.User)
+        usrURL := make(map[int]*[]core.UserURLPair)
+
+        storage := fileStorage{filePath: filePath, users: usr, userURLPairs: usrURL}
+        if err := сheckFile(filePath); err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+        <span class="cov0" title="0">logger.Log.Info("Init storage",
+                zap.String("Storage", "File storage"),
+        )
+
+        return &amp;storage, nil</span>
+
+}
+
+// InitPostgresStorage создает хранилище данных в БД на экземпляре Postgres
+func InitPostgresStorage(connectionString string) (*postgresStorage, error) <span class="cov8" title="1">{
+        db, err := sqlx.Open("pgx", connectionString)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov8" title="1">ctx := context.TODO()
+        if err = db.PingContext(ctx); err != nil </span><span class="cov8" title="1">{
+                return nil, err
+        }</span>
+        <span class="cov0" title="0">delQueue := make(chan string)
+        storage := postgresStorage{DB: db, ConnectionString: connectionString, deleteQueue: delQueue, preparedStatements: map[string]*sqlx.Stmt{}}
+        err = storage.createTables(ctx)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">err = storage.prepareStatements()
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">logger.Log.Info("Init storage",
+                zap.String("Storage", "PostgresStorage"),
+        )
+
+        return &amp;storage, nil</span>
+}
+
+func (s *postgresStorage) prepareStatements() error <span class="cov0" title="0">{
+
+        nstmtSelectUser, err := s.DB.Preparex(`SELECT ID from Users WHERE ID = $1`)
+        if err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+
+        <span class="cov0" title="0">nstmtInsertUser, err := s.DB.Preparex(`INSERT INTO Users (Name) VALUES ($1) RETURNING ID`)
+        if err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+
+        <span class="cov0" title="0">nstmtSelectShortURL, err := s.DB.Preparex(`SELECT short from Urls WHERE original = $1`)
+        if err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+        <span class="cov0" title="0">nstmtInsertURL, err := s.DB.Preparex(`INSERT INTO Urls (original, short, userID) SELECT $1, $2, $3`)
+        if err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+
+        <span class="cov0" title="0">nstmtSelectOriginalURL, err := s.DB.Preparex(`SELECT original, isDeleted FROM Urls WHERE short = $1`)
+        if err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+
+        <span class="cov0" title="0">nstmtSelectUserURLHistory, err := s.DB.Preparex(`SELECT original AS origin, short, userID AS userkey FROM Urls WHERE UserID = $1`)
+        if err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+
+        <span class="cov0" title="0">nstmtDeleteURL, err := s.DB.Preparex(`UPDATE Urls SET isDeleted = true WHERE short = $1 AND userID = $2`)
+        if err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+
+        // deleteURL UPDATE Urls SET isDeleted = true WHERE short = $1 AND userID = $2
+
+        <span class="cov0" title="0">s.preparedStatements["SelectUser"] = nstmtSelectUser
+        s.preparedStatements["InsertUser"] = nstmtInsertUser
+        s.preparedStatements["SelectShortURL"] = nstmtSelectShortURL
+        s.preparedStatements["InsertURL"] = nstmtInsertURL
+        s.preparedStatements["SelectOriginalURL"] = nstmtSelectOriginalURL
+        s.preparedStatements["SelectUserURLHistory"] = nstmtSelectUserURLHistory
+        s.preparedStatements["DeleteURL"] = nstmtDeleteURL
+
+        return nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file24" style="display: none">package repo
+
+import (
+        "bufio"
+        "encoding/json"
+        "errors"
+        "fmt"
+        "log"
+        "os"
+
+        "github.com/rodeorm/shortener/internal/core"
+)
+
+// InsertShortURL принимает оригинальный URL, генерирует для него ключ и сохраняет соответствие оригинального URL и ключа (либо возвращает ранее созданный ключ)
+func (s fileStorage) InsertURL(URL, baseURL string, user *core.User) (*core.URL, error) <span class="cov0" title="0">{
+        url := core.URL{OriginalURL: core.GetClearURL(URL, "")}
+
+        if !core.CheckURLValidity(URL) </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("невалидный URL: %s", URL)
+        }</span>
+
+        <span class="cov0" title="0">key, isShorted, err := s.getShortlURLFromFile(URL)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("ошибка при открытии файла в InsertURL %w", err)
+        }</span>
+        <span class="cov0" title="0">url.Key = key
+        url.HasBeenShorted = isShorted
+
+        if url.HasBeenShorted </span><span class="cov0" title="0">{
+                return &amp;url, nil
+        }</span>
+        <span class="cov0" title="0">url.Key, _ = core.ReturnShortKey(5)
+
+        f, err := os.OpenFile(s.filePath, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0777)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("ошибка при открытии файла в InsertURL %w", err)
+        }</span>
+        <span class="cov0" title="0">defer f.Close()
+
+        pair := core.URLPair{Origin: url.OriginalURL, Short: url.Key}
+        data, err := json.Marshal(pair)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("ошибка при открытии маршалининге урл %s в InsertURL %w", pair, err)
+        }</span>
+
+        <span class="cov0" title="0">s.insertUserURLPair(baseURL+"/"+url.Key, URL, user)
+        data = append(data, '\n')
+        _, err = f.Write(data)
+
+        return &amp;url, err</span>
+}
+
+// getShortlURLFromFile возвращает из файла сокращенный URL по оригинальному URL
+func (s fileStorage) getShortlURLFromFile(URL string) (string, bool, error) <span class="cov0" title="0">{
+
+        file, err := os.Open(s.filePath)
+        if err != nil </span><span class="cov0" title="0">{
+                return "", false, fmt.Errorf("ошибка при открытии файла в getShortlURLFromFile %w", err)
+        }</span>
+        <span class="cov0" title="0">defer file.Close()
+
+        var up core.URLPair
+        scanner := bufio.NewScanner(file)
+        for scanner.Scan() </span><span class="cov0" title="0">{
+                json.Unmarshal(scanner.Bytes(), &amp;up)
+                if up.Origin == URL </span><span class="cov0" title="0">{
+                        return up.Short, true, nil
+                }</span>
+        }
+
+        <span class="cov0" title="0">return "", false, nil</span>
+}
+
+// SelectOriginalURL принимает на вход короткий URL (относительный, без имени домена), извлекает из него ключ и возвращает оригинальный URL из хранилища
+func (s fileStorage) SelectOriginalURL(shortURL string) (*core.URL, error) <span class="cov0" title="0">{
+
+        file, err := os.Open(s.filePath)
+        if err != nil </span><span class="cov0" title="0">{
+                log.Fatal(err)
+        }</span>
+        <span class="cov0" title="0">defer file.Close()
+
+        var up core.URLPair
+        scanner := bufio.NewScanner(file)
+        for scanner.Scan() </span><span class="cov0" title="0">{
+                json.Unmarshal(scanner.Bytes(), &amp;up)
+                if up.Short == shortURL </span><span class="cov0" title="0">{
+                        return &amp;core.URL{OriginalURL: up.Origin, Key: up.Short}, nil
+                }</span>
+        }
+
+        <span class="cov0" title="0">return nil, fmt.Errorf("не найдена пара url")</span>
+
+}
+
+// InsertUser сохраняет нового пользователя или возвращает уже имеющегося в наличии
+func (s fileStorage) InsertUser(Key int) (*core.User, error) <span class="cov0" title="0">{
+        if Key &lt;= 0 </span><span class="cov0" title="0">{
+                user := &amp;core.User{Key: s.getNextFreeKey(), WasUnathorized: true}
+                s.users[user.Key] = user
+                return user, nil
+        }</span>
+        <span class="cov0" title="0">user, isExist := s.users[Key]
+        if !isExist </span><span class="cov0" title="0">{
+                user = &amp;core.User{Key: Key, WasUnathorized: true}
+                s.users[Key] = user
+                return user, nil
+        }</span>
+        <span class="cov0" title="0">return user, nil</span>
+}
+
+// InsertUserURLPair cохраняет информацию о том, что пользователь сокращал URL, если такой информации ранее не было
+func (s fileStorage) insertUserURLPair(shorten, origin string, user *core.User) error <span class="cov0" title="0">{
+        URLPair := &amp;core.UserURLPair{UserKey: user.Key, Short: shorten, Origin: origin}
+
+        userURLPairs, isExist := s.userURLPairs[URLPair.UserKey]
+        if !isExist </span><span class="cov0" title="0">{
+                userURLPair := *URLPair
+                new := make([]core.UserURLPair, 0, 10)
+                new = append(new, userURLPair)
+                s.userURLPairs[URLPair.UserKey] = &amp;new
+                return nil
+        }</span>
+
+        <span class="cov0" title="0">for _, value := range *userURLPairs </span><span class="cov0" title="0">{
+                if value.Origin == URLPair.Origin </span><span class="cov0" title="0">{
+                        return nil
+                }</span>
+        }
+        <span class="cov0" title="0">*s.userURLPairs[URLPair.UserKey] = append(*s.userURLPairs[URLPair.UserKey], *URLPair)
+
+        fmt.Println("Хранится историй запросов пользователей на данный момент: ")
+        for _, v := range s.userURLPairs </span><span class="cov0" title="0">{
+                fmt.Println(*v)
+        }</span>
+
+        <span class="cov0" title="0">return nil</span>
+}
+
+// SelectUserByKey выдает пользователя по ключу
+func (s fileStorage) SelectUserByKey(Key int) (*core.User, error) <span class="cov0" title="0">{
+        user, isExist := s.users[Key]
+        if !isExist </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("нет пользователя с ключом: %d", Key)
+        }</span>
+        <span class="cov0" title="0">return user, nil</span>
+}
+
+// SelectUserURL возвращает перечень соответствий между оригинальным и коротким адресом для конкретного пользователя
+func (s fileStorage) SelectUserURLHistory(user *core.User) ([]core.UserURLPair, error) <span class="cov0" title="0">{
+        if s.userURLPairs[user.Key] == nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("нет истории")
+        }</span>
+        <span class="cov0" title="0">return *s.userURLPairs[user.Key], nil</span>
+}
+
+// getNextFreeKey возвращает ближайший свободный идентификатор пользователя
+func (s fileStorage) getNextFreeKey() int <span class="cov0" title="0">{
+        var maxNumber int
+        for maxNumber = range s.users </span><span class="cov0" title="0">{
+                break</span>
+        }
+        <span class="cov0" title="0">for n := range s.users </span><span class="cov0" title="0">{
+                if n &gt; maxNumber </span><span class="cov0" title="0">{
+                        maxNumber = n
+                }</span>
+        }
+        <span class="cov0" title="0">return maxNumber + 1</span>
+}
+
+// Close фиктивно закрывает соединение
+func (s fileStorage) Close() <span class="cov0" title="0">{
+        fmt.Println("Закрыто")
+}</span>
+
+// DeleteURLs фиктивно удаляет URL
+func (s fileStorage) DeleteURLs(URLs []core.URL) error <span class="cov0" title="0">{
+        return nil
+}</span>
+
+// проверяет файл и создает новый или использует старый
+func сheckFile(filePath string) error <span class="cov0" title="0">{
+        fileInfo, err := os.Stat(filePath)
+
+        if errors.Is(err, os.ErrNotExist) </span><span class="cov0" title="0">{
+                newFile, err := os.Create(filePath)
+                if err != nil </span><span class="cov0" title="0">{
+                        log.Fatal(err)
+                        return err
+                }</span>
+                <span class="cov0" title="0">newFile.Close()
+                fmt.Println("Создан файл: ", newFile.Name())
+                return nil</span>
+        }
+        <span class="cov0" title="0">fmt.Println("Файл уже есть: ", fileInfo.Name())
+        return nil</span>
+}
+
+// Проверяет соединение
+func (s fileStorage) Ping() error <span class="cov0" title="0">{
+        return nil
+}</span>
+
+// fileStorage реализация хранилища в файле
+type fileStorage struct {
+        filePath     string
+        users        map[int]*core.User
+        userURLPairs map[int]*[]core.UserURLPair
+}
+</pre>
+		
+		<pre class="file" id="file25" style="display: none">package repo
+
+import (
+        "fmt"
+
+        "github.com/rodeorm/shortener/internal/core"
+        "github.com/rodeorm/shortener/internal/logger"
+)
+
+type memoryStorage struct {
+        originalToShort map[string]string
+        shortToOriginal map[string]string
+        users           map[int]*core.User
+        userURLPairs    map[int]*[]core.UserURLPair
+}
+
+// InsertShortURL принимает оригинальный URL, генерирует для него ключ и сохраняет соответствие оригинального URL и ключа (либо возвращает ранее созданный ключ)
+func (s memoryStorage) InsertURL(URL, baseURL string, user *core.User) (*core.URL, error) <span class="cov8" title="1">{
+        if !core.CheckURLValidity(URL) </span><span class="cov8" title="1">{
+                return nil, fmt.Errorf("невалидный URL: %s", URL)
+        }</span>
+        <span class="cov8" title="1">key, isExist := s.originalToShort[URL]
+        if isExist </span><span class="cov0" title="0">{
+                s.insertUserURLPair(baseURL+"/"+key, URL, user)
+                return &amp;core.URL{Key: key, HasBeenShorted: isExist}, nil
+        }</span>
+        <span class="cov8" title="1">key, err := core.ReturnShortKey(5)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov8" title="1">s.originalToShort[URL] = key
+        s.shortToOriginal[key] = URL
+
+        s.insertUserURLPair(baseURL+"/"+key, URL, user)
+
+        return &amp;core.URL{Key: key, HasBeenShorted: false}, nil</span>
+}
+
+// SelectOriginalURL принимает на вход короткий URL (относительный, без имени домена), извлекает из него ключ и возвращает оригинальный URL из хранилища
+func (s memoryStorage) SelectOriginalURL(shortURL string) (*core.URL, error) <span class="cov0" title="0">{
+        originalURL, isExist := s.shortToOriginal[shortURL]
+        return &amp;core.URL{Key: shortURL, HasBeenShorted: isExist, OriginalURL: originalURL}, nil
+}</span>
+
+// InsertUser сохраняет нового пользователя или возвращает уже имеющегося в наличии
+func (s memoryStorage) InsertUser(Key int) (*core.User, error) <span class="cov8" title="1">{
+        if Key == 0 </span><span class="cov8" title="1">{
+                user := &amp;core.User{Key: s.getNextFreeKey(), WasUnathorized: true}
+                s.users[user.Key] = user
+                return user, nil
+        }</span>
+        <span class="cov0" title="0">user, isExist := s.users[Key]
+        if !isExist </span><span class="cov0" title="0">{
+                user = &amp;core.User{Key: Key, WasUnathorized: true}
+                s.users[Key] = user
+                return user, nil
+        }</span>
+        <span class="cov0" title="0">return user, nil</span>
+}
+
+// InsertUserURLPair cохраняет информацию о том, что пользователь сокращал URL, если такой информации ранее не было
+func (s memoryStorage) insertUserURLPair(shorten, origin string, user *core.User) error <span class="cov8" title="1">{
+
+        URLPair := &amp;core.UserURLPair{UserKey: user.Key, Short: shorten, Origin: origin}
+
+        userURLPairs, isExist := s.userURLPairs[URLPair.UserKey]
+        if !isExist </span><span class="cov8" title="1">{
+                userURLPair := URLPair
+                new := make([]core.UserURLPair, 0, 10)
+                new = append(new, *userURLPair)
+                s.userURLPairs[URLPair.UserKey] = &amp;new
+                return nil
+        }</span>
+
+        <span class="cov0" title="0">for _, value := range *userURLPairs </span><span class="cov0" title="0">{
+                if value.Origin == URLPair.Origin </span><span class="cov0" title="0">{
+                        return nil
+                }</span>
+        }
+        <span class="cov0" title="0">*s.userURLPairs[URLPair.UserKey] = append(*s.userURLPairs[URLPair.UserKey], *URLPair)
+
+        return nil</span>
+}
+
+// SelectUserByKey выбирает пользователя по ключу
+func (s memoryStorage) SelectUserByKey(Key int) (*core.User, error) <span class="cov0" title="0">{
+        user, isExist := s.users[Key]
+        if !isExist </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("нет пользователя с ключом: %d", Key)
+        }</span>
+        <span class="cov0" title="0">return user, nil</span>
+}
+
+// SelectUserURL возвращает перечень соответствий между оригинальным и коротким адресом для конкретного пользователя
+func (s memoryStorage) SelectUserURLHistory(user *core.User) ([]core.UserURLPair, error) <span class="cov0" title="0">{
+        if s.userURLPairs[user.Key] == nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("нет истории")
+        }</span>
+        <span class="cov0" title="0">return *s.userURLPairs[user.Key], nil</span>
+}
+
+// getNextFreeKey возвращает ближайший свободный идентификатор пользователя
+func (s memoryStorage) getNextFreeKey() int <span class="cov8" title="1">{
+        var maxNumber int
+        for maxNumber = range s.users </span><span class="cov0" title="0">{
+                break</span>
+        }
+        <span class="cov8" title="1">for n := range s.users </span><span class="cov0" title="0">{
+                if n &gt; maxNumber </span><span class="cov0" title="0">{
+                        maxNumber = n
+                }</span>
+        }
+        <span class="cov8" title="1">return maxNumber + 1</span>
+}
+
+// Close закрывает доступ
+func (s memoryStorage) Close() <span class="cov0" title="0">{
+        logger.Log.Info("сделали вид, что закрыт доступ к хранению данных в памяти")
+}</span>
+
+// DeleteURLs удаляет URL
+func (s memoryStorage) DeleteURLs(URLs []core.URL) error <span class="cov0" title="0">{
+        logger.Log.Info("сделали вид, что удалили URL из памяти")
+        return nil
+}</span>
+
+// Ping проверяет доступ
+func (s memoryStorage) Ping() error <span class="cov0" title="0">{
+        logger.Log.Info("сделали вид, что проверили доступ к памяти")
+        return nil
+}</span>
+</pre>
+		
+		<pre class="file" id="file26" style="display: none">package repo
+
+import (
+        "context"
+        "fmt"
+        "time"
+
+        _ "github.com/jackc/pgx/v5/stdlib"
+        "github.com/jmoiron/sqlx"
+        "github.com/rodeorm/shortener/internal/core"
+)
+
+// Реализация хранилища в СУБД Postgres
+type postgresStorage struct {
+        DB                 *sqlx.DB    // Драйвер подключения к СУБД
+        DBName             string      // Имя БД из конфиг.файла
+        ConnectionString   string      // Строка подключения из конфиг.файла
+        deleteQueue        chan string // канал для удаления URL
+        preparedStatements map[string]*sqlx.Stmt
+}
+
+// Проверка соединения
+func (s postgresStorage) Ping() error <span class="cov0" title="0">{
+        return s.DB.Ping()
+}</span>
+
+/*
+InsertUser принимает идентификатор пользователя
+
+Возвращает по идентификатору уже имеющегося в наличии пользователя, если такового нет, то создает нового и возвращает что пользователь не был авторизован по переданному идентификатору
+*/
+func (s postgresStorage) InsertUser(Key int) (*core.User, error) <span class="cov0" title="0">{
+
+        // ctx, cancel := context.WithTimeout(r.Context(), 5*time.Second)
+        // defer cancel()
+
+        ctx := context.TODO()
+        //Ищем пользователя
+        err := s.preparedStatements["SelectUser"].GetContext(ctx, &amp;Key, Key)
+
+        //При любой ошибке (нет пользователя с таким ИД или передан 0 в Key) получаем нового
+        if err != nil </span><span class="cov0" title="0">{
+                err = s.preparedStatements["InsertUser"].GetContext(ctx, &amp;Key, time.Now().Format(time.DateTime))
+                if err != nil </span><span class="cov0" title="0">{
+                        return nil, fmt.Errorf("%s: %w", "ошибка при InsertUser", err)
+                }</span>
+                <span class="cov0" title="0">return &amp;core.User{Key: Key, WasUnathorized: true}, nil</span>
+        }
+        <span class="cov0" title="0">return &amp;core.User{Key: Key, WasUnathorized: false}, nil</span>
+}
+
+/*
+        InsertShortURL принимает оригинальный URL, генерирует для него ключ, сохраняет соответствие оригинального URL и ключа.
+
+Возвращает соответствующий сокращенный урл, а также признак того, что url сократили ранее
+*/
+func (s postgresStorage) InsertURL(URL, baseURL string, user *core.User) (*core.URL, error) <span class="cov0" title="0">{
+        if !core.CheckURLValidity(URL) </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("невалидный URL: %s", URL)
+        }</span>
+
+        <span class="cov0" title="0">ctx := context.TODO()
+
+        url, err := s.getShortURL(ctx, URL)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">s.preparedStatements["InsertURL"].ExecContext(ctx, url.OriginalURL, url.Key, user.Key)
+
+        return url, nil</span>
+
+}
+
+// getShortURL выдает сокращенный URL
+func (s postgresStorage) getShortURL(ctx context.Context, URL string) (*core.URL, error) <span class="cov0" title="0">{
+        url := core.URL{OriginalURL: URL}
+        // Смотрим - не сокращали ли урл ранее, если сокращали, то возвращаем ключ для сокращенного
+        err := s.preparedStatements["SelectShortURL"].GetContext(ctx, &amp;url.Key, url.OriginalURL)
+        if err == nil </span><span class="cov0" title="0">{
+                url.HasBeenShorted = true
+                return &amp;url, nil
+        }</span>
+        // В ином случае получаем новый ключ
+        <span class="cov0" title="0">url.Key, err = core.ReturnShortKey(5)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("%s: %w", "ошибка при обращении ReturnShortKey из SelectShortURL", err)
+        }</span>
+        <span class="cov0" title="0">return &amp;url, nil</span>
+}
+
+/*
+        SelectOriginalURL принимает короткий урл.
+
+Возвращает соответствующий оригинальный урл, признак, что url ранее уже сокращался; признак, что url удален
+*/
+func (s postgresStorage) SelectOriginalURL(shortURL string) (*core.URL, error) <span class="cov0" title="0">{
+        ctx := context.TODO()
+        url := core.URL{Key: shortURL}
+
+        err := s.preparedStatements["SelectOriginalURL"].QueryRowContext(ctx, shortURL).Scan(&amp;url.OriginalURL, &amp;url.HasBeenDeleted)
+
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("ошибка в SelectOriginalURL: %v", err)
+        }</span>
+
+        <span class="cov0" title="0">url.HasBeenShorted = true
+
+        return &amp;url, nil</span>
+}
+
+// SelectUserURLHistory возвращает перечень соответствий между оригинальным и коротким адресом для конкретного пользователя
+func (s postgresStorage) SelectUserURLHistory(user *core.User) ([]core.UserURLPair, error) <span class="cov0" title="0">{
+        urls := make([]core.UserURLPair, 0, 1)
+
+        err := s.preparedStatements["SelectUserURLHistory"].Select(&amp;urls, user.Key)
+
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">if len(urls) == 0 </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("нет истории для пользователя %d", user.Key)
+        }</span>
+        <span class="cov0" title="0">return urls, nil</span>
+}
+
+// Close закрывает соединение
+func (s postgresStorage) Close() <span class="cov0" title="0">{
+        s.DB.Close()
+}</span>
+
+// DeleteURLs удаляет URL (помечает как удаленные)
+func (s postgresStorage) DeleteURLs(URLs []core.URL) error <span class="cov0" title="0">{
+        tx := s.DB.MustBegin()
+        defer tx.Rollback()
+
+        query := `UPDATE Urls SET isDeleted = true WHERE short = :key AND userID = :user_key`
+
+        for _, update := range URLs </span><span class="cov0" title="0">{
+                _, err := tx.NamedExec(query, update)
+                if err != nil </span><span class="cov0" title="0">{
+                        if rbErr := tx.Rollback(); rbErr != nil </span><span class="cov0" title="0">{
+                                return fmt.Errorf("%s: %w: %s: %w", "ошибка при обновлении", err, "ошибка при откате транзакции", rbErr)
+                        }</span>
+                        <span class="cov0" title="0">return fmt.Errorf("откат транзакции из-за ошибки при обновлении %s: %d, %w", update.Key, update.UserKey, err)</span>
+                }
+        }
+
+        <span class="cov0" title="0">if err := tx.Commit(); err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("%s: %w", "ошибка при фиксации транзакции", err)
+        }</span>
+        <span class="cov0" title="0">return nil</span>
+}
+
+// createTables создает таблицы, если они не созданы ранее
+func (s postgresStorage) createTables(ctx context.Context) error <span class="cov0" title="0">{
+        _, err := s.DB.ExecContext(ctx,
+                "CREATE TABLE IF NOT EXISTS  Users"+
+                        "("+
+                        "ID INT GENERATED BY DEFAULT AS IDENTITY"+
+                        ", PRIMARY KEY (ID)"+
+                        ", Name TEXT NULL"+
+                        ")"+
+                        "; CREATE TABLE IF NOT EXISTS  Urls"+
+                        "("+
+                        "ID INT GENERATED BY DEFAULT AS IDENTITY"+
+                        ", PRIMARY KEY (ID)"+
+                        ", isDeleted BOOLEAN NOT NULL DEFAULT False"+
+                        ", UserID        INT  REFERENCES Users (ID) NOT NULL"+
+                        ", Original TEXT NOT NULL "+
+                        ", CorrelationID TEXT NULL"+
+                        ", Short TEXT NOT NULL"+
+                        ");"+
+                        "CREATE UNIQUE INDEX IF NOT EXISTS url_unique_idx ON Urls (original, UserID) INCLUDE (short);")
+        if err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("%s: %w", "ошибка при создании таблиц", err)
+        }</span>
+        <span class="cov0" title="0">return nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file27" style="display: none">// Code generated by MockGen. DO NOT EDIT.
+// Source: github.com/rodeorm/shortener/internal/repo (interfaces: Storager)
+
+// Package mocks is a generated GoMock package.
+package mocks
+
+import (
+        reflect "reflect"
+
+        gomock "github.com/golang/mock/gomock"
+        core "github.com/rodeorm/shortener/internal/core"
+)
+
+// MockStorager is a mock of Storager interface.
+type MockStorager struct {
+        ctrl     *gomock.Controller
+        recorder *MockStoragerMockRecorder
+}
+
+// MockStoragerMockRecorder is the mock recorder for MockStorager.
+type MockStoragerMockRecorder struct {
+        mock *MockStorager
+}
+
+// NewMockStorager creates a new mock instance.
+func NewMockStorager(ctrl *gomock.Controller) *MockStorager <span class="cov8" title="1">{
+        mock := &amp;MockStorager{ctrl: ctrl}
+        mock.recorder = &amp;MockStoragerMockRecorder{mock}
+        return mock
+}</span>
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockStorager) EXPECT() *MockStoragerMockRecorder <span class="cov8" title="1">{
+        return m.recorder
+}</span>
+
+// Close mocks base method.
+func (m *MockStorager) Close() <span class="cov0" title="0">{
+        m.ctrl.T.Helper()
+        m.ctrl.Call(m, "Close")
+}</span>
+
+// Close indicates an expected call of Close.
+func (mr *MockStoragerMockRecorder) Close() *gomock.Call <span class="cov0" title="0">{
+        mr.mock.ctrl.T.Helper()
+        return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Close", reflect.TypeOf((*MockStorager)(nil).Close))
+}</span>
+
+// DeleteURLs mocks base method.
+func (m *MockStorager) DeleteURLs(arg0 []core.URL) error <span class="cov8" title="1">{
+        m.ctrl.T.Helper()
+        ret := m.ctrl.Call(m, "DeleteURLs", arg0)
+        ret0, _ := ret[0].(error)
+        return ret0
+}</span>
+
+// DeleteURLs indicates an expected call of DeleteURLs.
+func (mr *MockStoragerMockRecorder) DeleteURLs(arg0 interface{}) *gomock.Call <span class="cov8" title="1">{
+        mr.mock.ctrl.T.Helper()
+        return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteURLs", reflect.TypeOf((*MockStorager)(nil).DeleteURLs), arg0)
+}</span>
+
+// InsertURL mocks base method.
+func (m *MockStorager) InsertURL(arg0, arg1 string, arg2 *core.User) (*core.URL, error) <span class="cov8" title="1">{
+        m.ctrl.T.Helper()
+        ret := m.ctrl.Call(m, "InsertURL", arg0, arg1, arg2)
+        ret0, _ := ret[0].(*core.URL)
+        ret1, _ := ret[1].(error)
+        return ret0, ret1
+}</span>
+
+// InsertURL indicates an expected call of InsertURL.
+func (mr *MockStoragerMockRecorder) InsertURL(arg0, arg1, arg2 interface{}) *gomock.Call <span class="cov8" title="1">{
+        mr.mock.ctrl.T.Helper()
+        return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "InsertURL", reflect.TypeOf((*MockStorager)(nil).InsertURL), arg0, arg1, arg2)
+}</span>
+
+// InsertUser mocks base method.
+func (m *MockStorager) InsertUser(arg0 int) (*core.User, error) <span class="cov8" title="1">{
+        m.ctrl.T.Helper()
+        ret := m.ctrl.Call(m, "InsertUser", arg0)
+        ret0, _ := ret[0].(*core.User)
+        ret1, _ := ret[1].(error)
+        return ret0, ret1
+}</span>
+
+// InsertUser indicates an expected call of InsertUser.
+func (mr *MockStoragerMockRecorder) InsertUser(arg0 interface{}) *gomock.Call <span class="cov8" title="1">{
+        mr.mock.ctrl.T.Helper()
+        return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "InsertUser", reflect.TypeOf((*MockStorager)(nil).InsertUser), arg0)
+}</span>
+
+// Ping mocks base method.
+func (m *MockStorager) Ping() error <span class="cov8" title="1">{
+        m.ctrl.T.Helper()
+        ret := m.ctrl.Call(m, "Ping")
+        ret0, _ := ret[0].(error)
+        return ret0
+}</span>
+
+// Ping indicates an expected call of Ping.
+func (mr *MockStoragerMockRecorder) Ping() *gomock.Call <span class="cov8" title="1">{
+        mr.mock.ctrl.T.Helper()
+        return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Ping", reflect.TypeOf((*MockStorager)(nil).Ping))
+}</span>
+
+// SelectOriginalURL mocks base method.
+func (m *MockStorager) SelectOriginalURL(arg0 string) (*core.URL, error) <span class="cov8" title="1">{
+        m.ctrl.T.Helper()
+        ret := m.ctrl.Call(m, "SelectOriginalURL", arg0)
+        ret0, _ := ret[0].(*core.URL)
+        ret1, _ := ret[1].(error)
+        return ret0, ret1
+}</span>
+
+// SelectOriginalURL indicates an expected call of SelectOriginalURL.
+func (mr *MockStoragerMockRecorder) SelectOriginalURL(arg0 interface{}) *gomock.Call <span class="cov8" title="1">{
+        mr.mock.ctrl.T.Helper()
+        return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SelectOriginalURL", reflect.TypeOf((*MockStorager)(nil).SelectOriginalURL), arg0)
+}</span>
+
+// SelectUserURLHistory mocks base method.
+func (m *MockStorager) SelectUserURLHistory(arg0 *core.User) ([]core.UserURLPair, error) <span class="cov8" title="1">{
+        m.ctrl.T.Helper()
+        ret := m.ctrl.Call(m, "SelectUserURLHistory", arg0)
+        ret0, _ := ret[0].([]core.UserURLPair)
+        ret1, _ := ret[1].(error)
+        return ret0, ret1
+}</span>
+
+// SelectUserURLHistory indicates an expected call of SelectUserURLHistory.
+func (mr *MockStoragerMockRecorder) SelectUserURLHistory(arg0 interface{}) *gomock.Call <span class="cov8" title="1">{
+        mr.mock.ctrl.T.Helper()
+        return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SelectUserURLHistory", reflect.TypeOf((*MockStorager)(nil).SelectUserURLHistory), arg0)
+}</span>
+</pre>
+		
+		</div>
+	</body>
+	<script>
+	(function() {
+		var files = document.getElementById('files');
+		var visible;
+		files.addEventListener('change', onChange, false);
+		function select(part) {
+			if (visible)
+				visible.style.display = 'none';
+			visible = document.getElementById(part);
+			if (!visible)
+				return;
+			files.value = part;
+			visible.style.display = 'block';
+			location.hash = part;
+		}
+		function onChange() {
+			select(files.value);
+			window.scrollTo(0, 0);
+		}
+		if (location.hash != "") {
+			select(location.hash.substr(1));
+		}
+		if (!visible) {
+			select("file0");
+		}
+	})();
+	</script>
+</html>

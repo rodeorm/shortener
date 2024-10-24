@@ -9,35 +9,41 @@ import (
 	"go.uber.org/zap"
 )
 
-type AbstractStorage interface {
+// Storager - абстрация для взаимодействия с хранилищем данных
+type Storager interface {
 	/*
 		InsertURL принимает оригинальный URL, базовый урл для генерации коротких адресов и пользователя.
 		Генерирует уникальный ключ для короткого адреса, сохраняет соответствие оригинального URL и ключа.
 
-		Возвращает соответствующий сокращенный урл, а также признак того, что url сократили ранее
+		Возвращает обновленный URL с соответствующим сокращенным URL, а также признаком того, что URL сократили ранее.
 	*/
 	InsertURL(URL, baseURL string, user *core.User) (*core.URL, error)
 
-	// SelectOriginalURL возвращает оригинальный адрес на основании короткого; признак, что url ранее уже сокращался; признак, что url удален
+	// SelectOriginalURL возвращает URL на основании короткого
 	SelectOriginalURL(shortURL string) (*core.URL, error)
 
 	// InsertUser сохраняет нового пользователя или возвращает уже имеющегося в наличии, а также значение "отсутствие авторизации по переданному идентификатору"
-	InsertUser(Key int) (*core.User, bool, error)
+	InsertUser(Key int) (*core.User, error)
 
 	// SelectUserURLHistory возвращает перечень соответствий между оригинальным и коротким адресом для конкретного пользователя
-	SelectUserURLHistory(user *core.User) (*[]core.UserURLPair, error)
+	SelectUserURLHistory(user *core.User) ([]core.UserURLPair, error)
 
-	// Массово помечает URL как удаленные. Успешно удалить URL может только пользователь, его создавший.
+	// DeleteURLs массово помечает URL как удаленные. Успешно удалить URL может только пользователь, его создавший.
 	DeleteURLs(URLs []core.URL) error
 
-	// Только для хранения данных в Postgres
-	CloseConnection()
-	PingDB() error
+	// Ниже методы специфичные для СУБД
+	// Можно, конечно, определить несколько интерфейсов (чтобы специфичный для СУБД включал в себя интерфейсы общие)
+	// Но это как показала практика - это лишние трудозатраты, усложняющие читабельность кода в местах использования интерфейса, поэтому вернул как было
+
+	// Close закрывает соединение
+	Close()
+	// Ping проверяет соединение
+	Ping() error
 }
 
 // NewStorage определяет место для хранения данных
-func NewStorage(filePath, dbConnectionString string) AbstractStorage {
-	var storage AbstractStorage
+func NewStorage(filePath, dbConnectionString string) Storager {
+	var storage Storager
 
 	storage, err := InitPostgresStorage(dbConnectionString)
 	if err == nil {
@@ -73,17 +79,17 @@ func InitMemoryStorage() *memoryStorage {
 func InitFileStorage(filePath string) (*fileStorage, error) {
 	usr := make(map[int]*core.User)
 	usrURL := make(map[int]*[]core.UserURLPair)
+
 	storage := fileStorage{filePath: filePath, users: usr, userURLPairs: usrURL}
-	err := storage.CheckFile(filePath)
-	if err != nil {
+	if err := сheckFile(filePath); err != nil {
 		return nil, err
 	}
-
 	logger.Log.Info("Init storage",
 		zap.String("Storage", "File storage"),
 	)
 
 	return &storage, nil
+
 }
 
 // InitPostgresStorage создает хранилище данных в БД на экземпляре Postgres
